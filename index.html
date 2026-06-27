@@ -385,7 +385,7 @@
         <p class="paper-tag">Agritech</p>
         <h3 class="paper-title">An Efficient Deep Learning Based Mobile Application for Pigeon Pea Disease Classification</h3>
         <p class="paper-authors">P.K. Chaudhary, S.K. Chaudhary, U.K. Karn, D. Neupane, R.K. Yadav, D.P. Guragain, B. Shrestha</p>
-        <p class="paper-abstract">About 65 percent of Nepal’s population depends on agriculture, with pigeon pea (‘Rahar’) being a key legume crop for traditional food products. Frequent disease outbreaks, coupled with limited access to agronomists and challenging terrain, force small-scale farmers to rely on manual visual inspection, often resulting in delayed or inaccurate disease identification and excessive pesticide use.</p>
+        <p class="paper-abstract">About 65 percent of Nepal's population depends on agriculture, with pigeon pea ('Rahar') being a key legume crop for traditional food products. Frequent disease outbreaks, coupled with limited access to agronomists and challenging terrain, force small-scale farmers to rely on manual visual inspection, often resulting in delayed or inaccurate disease identification and excessive pesticide use.</p>
         <a href="https://ieeexplore.ieee.org/document/11485179" target="_blank" class="paper-link">Read paper →</a>
       </div>
       <div class="paper-card" data-cat="technology">
@@ -434,7 +434,6 @@
       </span>
       <span class="collab-btn-text">
         <span class="collab-btn-label">Let's Collaborate</span>
-        <span class="collab-btn-sub">readimeapp@gmail.com</span>
       </span>
       <span class="collab-btn-arrow">→</span>
     </a>
@@ -614,18 +613,14 @@ catBtns.forEach(btn => {
   const PTS = 80;
 
   function project(lat, lng) {
-    // Rotate by rotY (around Y) then rotX (around X)
     const φ = lat * Math.PI / 180;
     const λ = lng * Math.PI / 180;
-    // 3D point on unit sphere
     let x0 = Math.cos(φ) * Math.sin(λ);
     let y0 = Math.sin(φ);
     let z0 = Math.cos(φ) * Math.cos(λ);
-    // rotate around Y axis by rotY
     const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
     let x1 = x0 * cosY + z0 * sinY;
     let z1 = -x0 * sinY + z0 * cosY;
-    // rotate around X axis by rotX
     const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
     let y2 = y0 * cosX - z1 * sinX;
     let z2 = y0 * sinX + z1 * cosX;
@@ -650,14 +645,12 @@ catBtns.forEach(btn => {
   function draw() {
     ctx.clearRect(0, 0, SIZE, SIZE);
 
-    // Outer circle
     ctx.beginPath();
     ctx.arc(cx, cy, R, 0, Math.PI * 2);
     ctx.strokeStyle = 'rgba(0,0,48,0.22)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // Latitude lines
     LAT_LINES.forEach(lat => {
       const pts = [];
       for (let i = 0; i <= PTS; i++) {
@@ -666,7 +659,6 @@ catBtns.forEach(btn => {
       drawArc(pts, 0.13, 0.8);
     });
 
-    // Longitude lines
     LNG_LINES.forEach(lng => {
       const pts = [];
       for (let i = 0; i <= PTS; i++) {
@@ -675,25 +667,20 @@ catBtns.forEach(btn => {
       drawArc(pts, 0.13, 0.8);
     });
 
-    // Equator highlight
     const eq = [];
     for (let i = 0; i <= PTS; i++) eq.push(project(0, (i / PTS) * 360 - 180));
     drawArc(eq, 0.28, 1.2);
 
-    // Prime meridian highlight
     const pm = [];
     for (let i = 0; i <= PTS; i++) pm.push(project(-90 + (i / PTS) * 180, 0));
     drawArc(pm, 0.18, 1.0);
 
-    // Center dot
     ctx.beginPath();
     ctx.arc(cx, cy, 2.5, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(0,0,48,0.2)';
     ctx.fill();
 
-    // Mouse interaction: subtle highlight dot on globe surface
     if (hoverActive) {
-      // convert mouse norm to lat/lng roughly
       const hx = cx + mouseNorm.x * R * 0.8;
       const hy = cy + mouseNorm.y * R * 0.8;
       ctx.beginPath();
@@ -705,21 +692,18 @@ catBtns.forEach(btn => {
 
   function animate() {
     if (!dragging) {
-      // drift influenced slightly by mouse hover
       const targetVelX = hoverActive ? mouseNorm.y * 0.0012 : 0;
       const targetVelY = hoverActive ? 0.002 + mouseNorm.x * 0.004 : 0.004;
       velX += (targetVelX - velX) * 0.04;
       velY += (targetVelY - velY) * 0.04;
       rotX += velX;
       rotY += velY;
-      // clamp tilt
       rotX = Math.max(-0.55, Math.min(0.55, rotX));
     }
     draw();
     requestAnimationFrame(animate);
   }
 
-  // Mouse drag on wrap
   wrap.addEventListener('mousedown', e => {
     dragging = true;
     lastX = e.clientX; lastY = e.clientY;
@@ -741,11 +725,9 @@ catBtns.forEach(btn => {
   });
   window.addEventListener('mouseup', () => { dragging = false; });
 
-  // Mouse enter/leave
   wrap.addEventListener('mouseenter', () => { hoverActive = true; });
   wrap.addEventListener('mouseleave', () => { hoverActive = false; mouseNorm = { x: 0, y: 0 }; });
 
-  // Touch drag on wrap
   wrap.addEventListener('touchstart', e => {
     dragging = true;
     lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
