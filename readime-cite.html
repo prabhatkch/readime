@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Readime Cite: Cite with confidence.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#E0EDFF;--ink:#000030;--ink-muted:#3a3a6a;--ink-ghost:#8890b8;
+  --surface:#fff;--rule:rgba(0,0,48,0.1);--accent:#000030;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px}
+.nav-logo-wrap{display:flex;align-items:baseline;gap:0}
+.nav-logo-parent{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:400;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:-0.3px}
+.nav-logo-sep{color:rgba(224,237,255,0.2);margin:0 6px;font-size:13px}
+.nav-logo-product{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#E0EDFF;letter-spacing:-0.3px}
+.nav-back{font-size:12px;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+.nav-back:hover{color:#E0EDFF}
+.nav-tagline{font-size:12px;color:rgba(224,237,255,0.35);font-style:italic}
+
+/* LAYOUT */
+.app{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 56px)}
+
+/* SIDEBAR */
+.sidebar{background:var(--surface);border-right:1px solid var(--rule);padding:32px 0;overflow-y:auto;position:sticky;top:56px;height:calc(100vh - 56px)}
+.sidebar-section{padding:0 24px;margin-bottom:32px}
+.sidebar-label{font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-ghost);margin-bottom:12px}
+.style-btn{width:100%;text-align:left;padding:11px 14px;font-family:'Inter',sans-serif;font-size:13px;font-weight:400;color:var(--ink-muted);background:transparent;border:1px solid transparent;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.style-btn:hover{background:var(--bg);color:var(--ink)}
+.style-btn.active{background:var(--ink);color:#E0EDFF;border-color:var(--ink)}
+.style-badge{font-size:10px;font-weight:500;letter-spacing:0.08em;padding:2px 7px;border-radius:2px}
+.style-btn.active .style-badge{background:rgba(224,237,255,0.15);color:rgba(224,237,255,0.6)}
+.style-btn:not(.active) .style-badge{background:var(--bg);color:var(--ink-ghost)}
+
+.type-btn{width:100%;text-align:left;padding:9px 14px;font-size:13px;color:var(--ink-muted);background:transparent;border:none;cursor:pointer;transition:all 0.15s;font-family:'Inter',sans-serif}
+.type-btn:hover{color:var(--ink);background:var(--bg)}
+.type-btn.active{color:var(--ink);font-weight:500;background:rgba(0,0,48,0.05)}
+.sidebar-divider{height:1px;background:var(--rule);margin:8px 24px 24px}
+
+/* MAIN CONTENT */
+.main{padding:40px 48px;overflow-y:auto}
+.main-header{margin-bottom:36px}
+.main-title{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:300;letter-spacing:-1px;margin-bottom:6px}
+.main-title strong{font-weight:600}
+.main-sub{font-size:13px;color:var(--ink-muted)}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+.form-grid.single{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-ghost)}
+.field input,.field textarea{padding:11px 14px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;resize:none}
+.field input:focus,.field textarea:focus{border-color:var(--ink)}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-ghost)}
+
+/* PREVIEW */
+.preview-box{background:var(--surface);border:1px solid var(--rule);padding:28px 32px;margin-bottom:20px}
+.preview-style-tag{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-ghost);margin-bottom:12px}
+.preview-citation{font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.8;color:var(--ink);word-break:break-word;min-height:48px}
+.preview-citation .cite-author{color:#1a5276}
+.preview-citation .cite-year{color:#7d3c98}
+.preview-citation .cite-title{color:#1a3a1a}
+.preview-citation .cite-journal{color:#784212;font-style:italic}
+.preview-citation .cite-volume{color:#1a5276}
+.preview-citation .cite-doi{color:#1a5276}
+.preview-citation .cite-plain{color:var(--ink)}
+.preview-empty{font-size:13px;color:var(--ink-ghost);font-style:italic}
+
+.preview-actions{display:flex;gap:10px;margin-bottom:32px}
+.act-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;border:none}
+.act-btn-primary{background:var(--ink);color:#E0EDFF}
+.act-btn-primary:hover{opacity:0.82}
+.act-btn-ghost{background:transparent;color:var(--ink-muted);border:1px solid var(--rule)}
+.act-btn-ghost:hover{background:var(--ink);color:#E0EDFF;border-color:var(--ink)}
+.copy-success{color:#27ae60 !important;border-color:#27ae60 !important}
+
+/* ANATOMY */
+.anatomy-section{margin-bottom:32px}
+.anatomy-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;letter-spacing:-0.3px;margin-bottom:14px}
+.anatomy-parts{display:flex;flex-wrap:wrap;gap:8px}
+.anatomy-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--rule);font-size:12px;cursor:pointer;transition:all 0.2s;position:relative}
+.anatomy-chip:hover{border-color:var(--ink)}
+.anatomy-chip .chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.anatomy-chip.author .chip-dot{background:#1a5276}
+.anatomy-chip.year .chip-dot{background:#7d3c98}
+.anatomy-chip.title .chip-dot{background:#1a3a1a}
+.anatomy-chip.journal .chip-dot{background:#784212}
+.anatomy-chip.volume .chip-dot{background:#1a5276}
+.anatomy-chip.doi .chip-dot{background:#1a5276}
+.anatomy-tooltip{display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:var(--ink);color:#E0EDFF;font-size:12px;padding:10px 14px;width:220px;z-index:10;line-height:1.5}
+.anatomy-chip:hover .anatomy-tooltip{display:block}
+
+/* COMPARE */
+.compare-section{background:var(--surface);border:1px solid var(--rule);padding:28px 32px;margin-bottom:32px}
+.compare-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;letter-spacing:-0.3px;margin-bottom:20px}
+.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.compare-item{}
+.compare-style-name{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-ghost);margin-bottom:8px}
+.compare-citation{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-muted);word-break:break-word}
+
+/* MISTAKES */
+.mistakes-section{margin-bottom:32px}
+.mistakes-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;letter-spacing:-0.3px;margin-bottom:14px}
+.mistake-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);margin-bottom:8px}
+.mistake-wrong,.mistake-correct{padding:12px 16px;font-size:13px;line-height:1.5}
+.mistake-wrong{background:#fff5f5;border-right:1px solid var(--rule)}
+.mistake-correct{background:#f5fff8}
+.mistake-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px}
+.mistake-label.wrong{color:#c0392b}
+.mistake-label.correct{color:#27ae60}
+
+/* TOAST */
+.toast{position:fixed;bottom:32px;right:32px;background:var(--ink);color:#E0EDFF;padding:13px 22px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+/* CTA FOOTER */
+.cite-footer{background:var(--ink);padding:48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.cite-footer-text{}
+.cite-footer-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(224,237,255,0.4);margin-bottom:8px}
+.cite-footer-heading{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:300;letter-spacing:-0.8px;color:#E0EDFF}
+.cite-footer-heading strong{font-weight:600}
+.cite-footer-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.cite-footer-btn-primary{padding:12px 24px;background:#E0EDFF;color:var(--ink);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s}
+.cite-footer-btn-primary:hover{opacity:0.85}
+.cite-footer-btn-ghost{padding:11px 24px;background:transparent;color:rgba(224,237,255,0.6);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;border:1px solid rgba(224,237,255,0.2);transition:all 0.2s}
+.cite-footer-btn-ghost:hover{color:#E0EDFF;border-color:rgba(224,237,255,0.5)}
+
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:0;padding:20px 0}
+  .sidebar-section{padding:0 16px;margin-bottom:16px;flex:1;min-width:200px}
+  .main{padding:28px 20px}
+  .form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:1}
+  .compare-grid{grid-template-columns:1fr}
+  nav{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo-wrap">
+    <a href="index.html" class="nav-logo-parent">Readime</a>
+    <span class="nav-logo-sep">/</span>
+    <span class="nav-logo-product">Cite</span>
+  </div>
+  <span class="nav-tagline">Cite with confidence.</span>
+  <a href="#" class="nav-back" onclick="history.length > 1 ? history.back() : window.location.href='https://readime.com'; return false;">← Back to Readime</a>
+</nav>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Citation Style</div>
+      <button class="style-btn active" data-style="apa">APA 7 <span class="style-badge">Social Sciences</span></button>
+      <button class="style-btn" data-style="ieee">IEEE <span class="style-badge">Engineering</span></button>
+      <button class="style-btn" data-style="mla">MLA 9 <span class="style-badge">Humanities</span></button>
+      <button class="style-btn" data-style="chicago">Chicago <span class="style-badge">History</span></button>
+      <button class="style-btn" data-style="harvard">Harvard <span class="style-badge">General</span></button>
+      <button class="style-btn" data-style="vancouver">Vancouver <span class="style-badge">Medicine</span></button>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Source Type</div>
+      <button class="type-btn active" data-type="journal">Journal Article</button>
+      <button class="type-btn" data-type="website">Website</button>
+      <button class="type-btn" data-type="book">Book</button>
+      <button class="type-btn" data-type="conference">Conference Paper</button>
+      <button class="type-btn" data-type="thesis">Thesis / Dissertation</button>
+      <button class="type-btn" data-type="ai">AI Tool</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="main-header">
+      <h1 class="main-title">Build a <strong id="currentStyleLabel">APA 7</strong> citation</h1>
+      <p class="main-sub" id="currentTypeLabel">Source: Journal Article. Fill in the fields below.</p>
+    </div>
+
+    <!-- DYNAMIC FORM -->
+    <div class="form-grid" id="citationForm"></div>
+
+    <!-- PREVIEW -->
+    <div class="preview-box">
+      <div class="preview-style-tag" id="previewStyleTag">APA 7 — Journal Article</div>
+      <div class="preview-citation" id="previewCitation"><span class="preview-empty">Your citation will appear here as you type…</span></div>
+    </div>
+    <div class="preview-actions">
+      <button class="act-btn act-btn-primary" id="copyBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="1"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy Citation
+      </button>
+      <button class="act-btn act-btn-ghost" id="resetBtn">Reset Fields</button>
+    </div>
+
+    <!-- ANATOMY -->
+    <div class="anatomy-section">
+      <div class="anatomy-title">Citation Anatomy — hover to learn</div>
+      <div class="anatomy-parts" id="anatomyParts"></div>
+    </div>
+
+    <!-- COMPARE -->
+    <div class="compare-section">
+      <div class="compare-title">Same source, all styles</div>
+      <div class="compare-grid" id="compareGrid"></div>
+    </div>
+
+    <!-- MISTAKES -->
+    <div class="mistakes-section">
+      <div class="mistakes-title">Common mistakes in <span id="mistakeStyleName">APA 7</span></div>
+      <div id="mistakesContainer"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- CTA FOOTER -->
+<div class="cite-footer">
+  <div class="cite-footer-text">
+    <div class="cite-footer-eyebrow">Need more than a citation tool?</div>
+    <div class="cite-footer-heading">Readime helps you do <strong>the whole research.</strong></div>
+  </div>
+  <div class="cite-footer-ctas">
+    <a href="readime.html#services" class="cite-footer-btn-primary">Explore Services</a>
+    <a href="readime.html#contact" class="cite-footer-btn-ghost">Get in Touch</a>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard!</div>
+
+<script>
+/* ─── DATA ─── */
+const STYLES = {
+  apa:      { label: 'APA 7',      field: 'Social Sciences' },
+  ieee:     { label: 'IEEE',       field: 'Engineering' },
+  mla:      { label: 'MLA 9',      field: 'Humanities' },
+  chicago:  { label: 'Chicago',    field: 'History / Arts' },
+  harvard:  { label: 'Harvard',    field: 'General' },
+  vancouver:{ label: 'Vancouver',  field: 'Medicine' }
+};
+
+const TYPES = {
+  journal:    'Journal Article',
+  website:    'Website',
+  book:       'Book',
+  conference: 'Conference Paper',
+  thesis:     'Thesis / Dissertation',
+  ai:         'AI Tool'
+};
+
+const FIELDS = {
+  journal: [
+    {id:'authors',label:'Author(s)',placeholder:'Last, F. M.; Second, A. B.',full:true},
+    {id:'year',label:'Year',placeholder:'2024'},
+    {id:'title',label:'Article Title',placeholder:'Full title of the article',full:true},
+    {id:'journal',label:'Journal Name',placeholder:'Nature Human Behaviour'},
+    {id:'volume',label:'Volume',placeholder:'12'},
+    {id:'issue',label:'Issue',placeholder:'3'},
+    {id:'pages',label:'Pages',placeholder:'100–115'},
+    {id:'doi',label:'DOI',placeholder:'10.1000/xyz123',full:true}
+  ],
+  website: [
+    {id:'authors',label:'Author(s)',placeholder:'Last, F. M.',full:true},
+    {id:'year',label:'Year',placeholder:'2024'},
+    {id:'title',label:'Page Title',placeholder:'Title of the webpage',full:true},
+    {id:'site',label:'Website / Organization',placeholder:'BBC News',full:true},
+    {id:'url',label:'URL',placeholder:'https://example.com/page',full:true},
+    {id:'accessed',label:'Date Accessed',placeholder:'March 15, 2024'}
+  ],
+  book: [
+    {id:'authors',label:'Author(s)',placeholder:'Last, F. M.',full:true},
+    {id:'year',label:'Year',placeholder:'2024'},
+    {id:'title',label:'Book Title',placeholder:'Title of the Book',full:true},
+    {id:'edition',label:'Edition',placeholder:'3rd'},
+    {id:'publisher',label:'Publisher',placeholder:'Oxford University Press'},
+    {id:'place',label:'Place of Publication',placeholder:'New York, NY'}
+  ],
+  conference: [
+    {id:'authors',label:'Author(s)',placeholder:'Last, F. M.',full:true},
+    {id:'year',label:'Year',placeholder:'2024'},
+    {id:'title',label:'Paper Title',placeholder:'Full title of the paper',full:true},
+    {id:'conference',label:'Conference Name',placeholder:'IEEE International Conference on…',full:true},
+    {id:'location',label:'Location',placeholder:'Tokyo, Japan'},
+    {id:'pages',label:'Pages',placeholder:'100–106'},
+    {id:'doi',label:'DOI',placeholder:'10.1109/CONF.2024.0001',full:true}
+  ],
+  thesis: [
+    {id:'authors',label:'Author',placeholder:'Last, First',full:true},
+    {id:'year',label:'Year',placeholder:'2024'},
+    {id:'title',label:'Thesis Title',placeholder:'Full title of your thesis',full:true},
+    {id:'degree',label:'Degree',placeholder:'PhD / Master\'s'},
+    {id:'institution',label:'Institution',placeholder:'University of Oxford'},
+    {id:'url',label:'URL / Repository',placeholder:'https://...'}
+  ],
+  ai: [
+    {id:'tool',label:'AI Tool Name',placeholder:'ChatGPT / Claude / Gemini'},
+    {id:'version',label:'Version / Model',placeholder:'GPT-4o / claude-3-5-sonnet'},
+    {id:'year',label:'Year',placeholder:'2024'},
+    {id:'prompt',label:'Your Prompt (brief)',placeholder:'Summarize quantum computing for students',full:true},
+    {id:'company',label:'Company',placeholder:'OpenAI / Anthropic / Google'},
+    {id:'url',label:'URL',placeholder:'https://chat.openai.com',full:true},
+    {id:'accessed',label:'Date Accessed',placeholder:'June 10, 2024'}
+  ]
+};
+
+/* ─── GENERATORS ─── */
+function get(id){ return (document.getElementById('f_'+id)||{value:''}).value.trim(); }
+function italic(t){ return t ? `<em>${t}</em>` : ''; }
+function bold(t){ return t ? `<strong>${t}</strong>` : ''; }
+
+function formatAuthorAPA(raw){
+  if(!raw) return '';
+  const parts = raw.split(';').map(s=>s.trim()).filter(Boolean);
+  if(parts.length === 1){
+    const p = parts[0]; const c = p.split(',');
+    if(c.length >= 2){ const initials = c[1].trim().split(' ').map(n=>n[0]+'.').join(' '); return c[0].trim()+', '+initials; }
+    return p;
+  }
+  return parts.map(p=>{ const c=p.split(','); if(c.length>=2){ const i=c[1].trim().split(' ').map(n=>n[0]+'.').join(' '); return c[0].trim()+', '+i; } return p; }).join(', ');
+}
+function formatAuthorIEEE(raw){
+  if(!raw) return '';
+  return raw.split(';').map(p=>{
+    p=p.trim(); const c=p.split(',');
+    if(c.length>=2){ const i=c[1].trim().split(' ').map(n=>n[0]+'.').join('. ')+'.'; return i+' '+c[0].trim(); }
+    return p;
+  }).join(', ');
+}
+function formatAuthorMLA(raw){
+  if(!raw) return '';
+  const parts = raw.split(';').map(s=>s.trim()).filter(Boolean);
+  if(parts.length===1) return parts[0]+'.';
+  const first = parts[0];
+  const rest = parts.slice(1).join(', and ');
+  return first+', and '+rest+'.';
+}
+function formatAuthorHarvard(raw){
+  if(!raw) return '';
+  return raw.split(';').map(p=>{ p=p.trim(); const c=p.split(','); if(c.length>=2){ return c[0].trim()+', '+c[1].trim()[0]+'.'; } return p; }).join(' and ')+',';
+}
+
+const generators = {
+  apa: {
+    journal(){ const a=formatAuthorAPA(get('authors'));const yr=get('year');const ti=get('title');const j=get('journal');const v=get('volume');const is=get('issue');const pg=get('pages');const doi=get('doi'); return [a,yr?'('+yr+').':'',ti?ti+'.':'',j?`<em>${j}</em>`:'',v?(is?`<em>${v}</em>(${is})`:`<em>${v}</em>`):'',pg?pg+'.':'',doi?`https://doi.org/${doi}`:''  ].filter(Boolean).join(' '); },
+    website(){ const a=formatAuthorAPA(get('authors'));const yr=get('year');const ti=get('title');const si=get('site');const url=get('url'); return [a,yr?'('+yr+').':'',ti?ti+'.':'',si?`<em>${si}</em>.`:'',url?url:''  ].filter(Boolean).join(' '); },
+    book(){ const a=formatAuthorAPA(get('authors'));const yr=get('year');const ti=get('title');const ed=get('edition');const pub=get('publisher'); return [a,yr?'('+yr+').':'',ti?`<em>${ti}</em>`+( ed?' ('+ed+' ed.).':'.'):'',pub?pub+'.':''  ].filter(Boolean).join(' '); },
+    conference(){ const a=formatAuthorAPA(get('authors'));const yr=get('year');const ti=get('title');const cn=get('conference');const pg=get('pages');const doi=get('doi'); return [a,yr?'('+yr+').':'',ti?ti+'.':'',cn?`In <em>${cn}</em>`+( pg?' (pp. '+pg+')':'')+'.'  :'',doi?`https://doi.org/${doi}`:''  ].filter(Boolean).join(' '); },
+    thesis(){ const a=formatAuthorAPA(get('authors'));const yr=get('year');const ti=get('title');const dg=get('degree');const ins=get('institution');const url=get('url'); return [a,yr?'('+yr+').':'',ti?`<em>${ti}</em>`:'',dg&&ins?`[${dg} thesis, ${ins}].`:'',url?url:''  ].filter(Boolean).join(' '); },
+    ai(){ const tool=get('tool');const ver=get('version');const yr=get('year');const co=get('company');const url=get('url');const acc=get('accessed'); return [`${tool||'AI Tool'}${ver?' ('+ver+')':''}.`,yr?'('+yr+').':'',co?co+'.':'',url?url:'',acc?`(Accessed ${acc})`:''  ].filter(Boolean).join(' '); }
+  },
+  ieee: {
+    journal(){ const a=formatAuthorIEEE(get('authors'));const ti=get('title');const j=get('journal');const v=get('volume');const is=get('issue');const pg=get('pages');const yr=get('year');const doi=get('doi'); return [`[1] ${a},`,'&ldquo;'+ti+'&rdquo;,',`<em>${j}</em>,`,v?`vol. ${v},`:'',is?`no. ${is},`:'',pg?`pp. ${pg},`:'',yr?yr+'.':'',doi?`doi: ${doi}.`:''  ].filter(Boolean).join(' '); },
+    website(){ const a=formatAuthorIEEE(get('authors'));const ti=get('title');const si=get('site');const url=get('url');const acc=get('accessed'); return [`[1] ${a},`,'&ldquo;'+ti+'&rdquo;',si?`<em>${si}</em>.`:'',url?`[Online]. Available: ${url}`:''  ,acc?`Accessed: ${acc}.`:''  ].filter(Boolean).join(' '); },
+    book(){ const a=formatAuthorIEEE(get('authors'));const ti=get('title');const ed=get('edition');const pl=get('place');const pub=get('publisher');const yr=get('year'); return [`[1] ${a},`,`<em>${ti}</em>${ed?', '+ed+' ed':''},`,pl&&pub?`${pl}: ${pub},`:'',yr?yr+'.':''  ].filter(Boolean).join(' '); },
+    conference(){ const a=formatAuthorIEEE(get('authors'));const ti=get('title');const cn=get('conference');const yr=get('year');const pg=get('pages');const doi=get('doi'); return [`[1] ${a},`,'&ldquo;'+ti+'&rdquo;,',`in <em>${cn}</em>,`,yr?yr+',':'',pg?`pp. ${pg},`:'',doi?`doi: ${doi}.`:''  ].filter(Boolean).join(' '); },
+    thesis(){ const a=formatAuthorIEEE(get('authors'));const ti=get('title');const dg=get('degree');const ins=get('institution');const yr=get('year'); return [`[1] ${a},`,`&ldquo;${ti},&rdquo;`,dg?`${dg} thesis,`:'',ins?ins+',':'',yr?yr+'.':''  ].filter(Boolean).join(' '); },
+    ai(){ const tool=get('tool');const ver=get('version');const yr=get('year');const url=get('url');const acc=get('accessed'); return [`[1] ${tool||'AI Tool'}${ver?' ('+ver+')':''},`,'response generated',yr?yr+'.':'',url?`[Online]. Available: ${url}`:''  ,acc?`Accessed: ${acc}.`:''  ].filter(Boolean).join(' '); }
+  },
+  mla: {
+    journal(){ const a=formatAuthorMLA(get('authors'));const ti=get('title');const j=get('journal');const v=get('volume');const is=get('issue');const yr=get('year');const pg=get('pages'); return [a,`&ldquo;${ti}.&rdquo;`,`<em>${j}</em>,`,v?`vol. ${v},`:'',is?`no. ${is},`:'',yr?yr+',':'',pg?`pp. ${pg}.`:''  ].filter(Boolean).join(' '); },
+    website(){ const a=formatAuthorMLA(get('authors'));const ti=get('title');const si=get('site');const yr=get('year');const url=get('url');const acc=get('accessed'); return [a,`&ldquo;${ti}.&rdquo;`,`<em>${si}</em>,`,yr?yr+',':'',url?url+'.':'',acc?`Accessed ${acc}.`:''  ].filter(Boolean).join(' '); },
+    book(){ const a=formatAuthorMLA(get('authors'));const ti=get('title');const ed=get('edition');const pub=get('publisher');const yr=get('year'); return [a,`<em>${ti}</em>${ed?', '+ed+' ed':''},`,pub?pub+',':'',yr?yr+'.':''  ].filter(Boolean).join(' '); },
+    conference(){ const a=formatAuthorMLA(get('authors'));const ti=get('title');const cn=get('conference');const yr=get('year');const pg=get('pages'); return [a,`&ldquo;${ti}.&rdquo;`,`<em>${cn}</em>,`,yr?yr+',':'',pg?`pp. ${pg}.`:''  ].filter(Boolean).join(' '); },
+    thesis(){ const a=formatAuthorMLA(get('authors'));const ti=get('title');const dg=get('degree');const ins=get('institution');const yr=get('year'); return [a,`<em>${ti}</em>.`,dg?dg+' thesis,':'',ins?ins+',':'',yr?yr+'.':''  ].filter(Boolean).join(' '); },
+    ai(){ const tool=get('tool');const ver=get('version');const yr=get('year');const url=get('url');const acc=get('accessed'); return [`<em>${tool||'AI Tool'}</em>${ver?' ('+ver+')':''},`,yr?yr+'.':'',url?url+'.':'',acc?`Accessed ${acc}.`:''  ].filter(Boolean).join(' '); }
+  },
+  chicago: {
+    journal(){ const a=get('authors');const ti=get('title');const j=get('journal');const v=get('volume');const is=get('issue');const yr=get('year');const pg=get('pages');const doi=get('doi'); return [a?a+'.':'',`&ldquo;${ti}.&rdquo;`,`<em>${j}</em>`,v?v:'',is?`no. ${is}`:'',yr?'('+yr+')':'',pg?': '+pg+'.':'',doi?`https://doi.org/${doi}.`:''  ].filter(Boolean).join(' '); },
+    website(){ const a=get('authors');const ti=get('title');const si=get('site');const yr=get('year');const url=get('url');const acc=get('accessed'); return [a?a+'.':'',`&ldquo;${ti}.&rdquo;`,`<em>${si}</em>.`,yr?'Last modified '+yr+'.':'',url?url+'.':'',acc?`Accessed ${acc}.`:''  ].filter(Boolean).join(' '); },
+    book(){ const a=get('authors');const ti=get('title');const ed=get('edition');const pl=get('place');const pub=get('publisher');const yr=get('year'); return [a?a+'.':'',`<em>${ti}</em>${ed?', '+ed+' ed':''},`,pl&&pub?`${pl}: ${pub},`:'',yr?yr+'.':''  ].filter(Boolean).join(' '); },
+    conference(){ const a=get('authors');const ti=get('title');const cn=get('conference');const yr=get('year');const pg=get('pages'); return [a?a+'.':'',`&ldquo;${ti}.&rdquo;`,`<em>${cn}</em>.`,yr?yr+'.':'',pg?`Pp. ${pg}.`:''  ].filter(Boolean).join(' '); },
+    thesis(){ const a=get('authors');const ti=get('title');const dg=get('degree');const ins=get('institution');const yr=get('year'); return [a?a+'.':'',`&ldquo;${ti}.&rdquo;`,dg?dg+' diss.,':'',ins?ins+',':'',yr?yr+'.':''  ].filter(Boolean).join(' '); },
+    ai(){ const tool=get('tool');const yr=get('year');const co=get('company');const url=get('url');const acc=get('accessed'); return [`${tool||'AI Tool'}.`,co?co+'.':'',yr?yr+'.':'',url?url+'.':'',acc?`Accessed ${acc}.`:''  ].filter(Boolean).join(' '); }
+  },
+  harvard: {
+    journal(){ const a=formatAuthorHarvard(get('authors'));const yr=get('year');const ti=get('title');const j=get('journal');const v=get('volume');const is=get('issue');const pg=get('pages');const doi=get('doi'); return [a,yr?yr+'.':'',`'${ti}',`,`<em>${j}</em>,`,v?`vol. ${v},`:'',is?`no. ${is},`:'',pg?`pp. ${pg}.`:'',doi?`doi: ${doi}`:''  ].filter(Boolean).join(' '); },
+    website(){ const a=formatAuthorHarvard(get('authors'));const yr=get('year');const ti=get('title');const si=get('site');const url=get('url');const acc=get('accessed'); return [a,yr?yr+'.':'',`<em>${ti}</em>.`,si?si+'.':'',url?`Available at: ${url}`:'',acc?`(Accessed: ${acc}).`:''  ].filter(Boolean).join(' '); },
+    book(){ const a=formatAuthorHarvard(get('authors'));const yr=get('year');const ti=get('title');const ed=get('edition');const pub=get('publisher');const pl=get('place'); return [a,yr?yr+'.':'',`<em>${ti}</em>${ed?', '+ed+' edn':''},`,pl&&pub?`${pl}: ${pub}.`:''].filter(Boolean).join(' '); },
+    conference(){ const a=formatAuthorHarvard(get('authors'));const yr=get('year');const ti=get('title');const cn=get('conference');const pg=get('pages'); return [a,yr?yr+'.':'',`'${ti}',`,`<em>${cn}</em>.`,pg?`pp. ${pg}.`:''  ].filter(Boolean).join(' '); },
+    thesis(){ const a=formatAuthorHarvard(get('authors'));const yr=get('year');const ti=get('title');const dg=get('degree');const ins=get('institution'); return [a,yr?yr+'.':'',`<em>${ti}</em>.`,dg?dg+' thesis.':'',ins?ins+'.':''  ].filter(Boolean).join(' '); },
+    ai(){ const tool=get('tool');const ver=get('version');const yr=get('year');const co=get('company');const url=get('url');const acc=get('accessed'); return [`${tool||'AI Tool'}${ver?' ('+ver+')':''},`,co?co+',':'',yr?yr+'.':'',`Available at: ${url||'[URL]'}`,acc?`(Accessed: ${acc}).`:''  ].filter(Boolean).join(' '); }
+  },
+  vancouver: {
+    journal(){ const a=get('authors');const ti=get('title');const j=get('journal');const yr=get('year');const v=get('volume');const is=get('issue');const pg=get('pages');const doi=get('doi'); return [`1. ${a}.`,ti?ti+'.':'',`<em>${j}</em>.`,yr?yr+';':'',v?v:'',is?`(${is}):`:'',pg?pg+'.':'',doi?`doi:${doi}`:''  ].filter(Boolean).join(' '); },
+    website(){ const a=get('authors');const ti=get('title');const si=get('site');const yr=get('year');const url=get('url');const acc=get('accessed'); return [`1. ${a}.`,ti?ti+'.':'',si?`[Internet]. ${si};`:'',yr?yr+'.':'',url?`Available from: ${url}`:'',acc?`Cited ${acc}.`:''  ].filter(Boolean).join(' '); },
+    book(){ const a=get('authors');const ti=get('title');const ed=get('edition');const pl=get('place');const pub=get('publisher');const yr=get('year'); return [`1. ${a}.`,`<em>${ti}</em>.`,ed?ed+' ed.':'',pl&&pub?`${pl}: ${pub};`:'',yr?yr+'.':''  ].filter(Boolean).join(' '); },
+    conference(){ const a=get('authors');const ti=get('title');const cn=get('conference');const yr=get('year');const pg=get('pages'); return [`1. ${a}.`,ti?ti+'.':'',`In: <em>${cn}</em>;`,yr?yr+'.':'',pg?`p. ${pg}.`:''  ].filter(Boolean).join(' '); },
+    thesis(){ const a=get('authors');const ti=get('title');const dg=get('degree');const ins=get('institution');const yr=get('year'); return [`1. ${a}.`,`<em>${ti}</em>`,dg?'['+dg+' thesis].':'',ins?ins+';':'',yr?yr+'.':''  ].filter(Boolean).join(' '); },
+    ai(){ const tool=get('tool');const yr=get('year');const co=get('company');const url=get('url');const acc=get('accessed'); return [`1. ${tool||'AI Tool'}.`,co?co+';':'',yr?yr+'.':'',url?`Available from: ${url}`:'',acc?`Cited ${acc}.`:''  ].filter(Boolean).join(' '); }
+  }
+};
+
+/* ─── ANATOMY ─── */
+const anatomy = {
+  journal:[
+    {key:'author',label:'Author',cls:'author',tip:'Credits the original creator. Formatted as Last, F. M. in APA. Essential for academic integrity.'},
+    {key:'year',label:'Year',cls:'year',tip:'Shows when the work was published. Readers use this to assess recency and historical context.'},
+    {key:'title',label:'Article Title',cls:'title',tip:'The exact title of the article — not italicized in APA for articles, but italic for journals and books.'},
+    {key:'journal',label:'Journal',cls:'journal',tip:'The container — the publication the article lives in. Usually italicized to distinguish from the article title.'},
+    {key:'volume',label:'Vol / Issue',cls:'volume',tip:'Volume = annual collection; Issue = specific edition within that year. Helps locate the exact publication.'},
+    {key:'doi',label:'DOI',cls:'doi',tip:'Digital Object Identifier — a permanent link to the article. Always include when available; it never breaks.'}
+  ]
+};
+
+/* ─── MISTAKES ─── */
+const mistakes = {
+  apa:[
+    {wrong:'Smith J 2025', correct:'Smith, J. (2025).', note:'Missing comma after last name and parentheses around year.'},
+    {wrong:'No italics on journal name', correct:'<em>Nature</em>', note:'Journal names are always italicized in APA.'},
+    {wrong:'Missing DOI', correct:'https://doi.org/10.xxxx', note:'Always include the DOI when it is available.'}
+  ],
+  ieee:[
+    {wrong:'Smith, John, "Title"', correct:'J. Smith, "Title"', note:'IEEE uses first initial + last name, not full first name.'},
+    {wrong:'pp 5-10', correct:'pp. 5–10', note:'Use "pp." (plural) and an en-dash, not a hyphen.'},
+    {wrong:'No bracket number', correct:'[1] J. Smith…', note:'IEEE citations are numbered in square brackets.'}
+  ],
+  mla:[
+    {wrong:'"Title." Journal 2023', correct:'"Title." <em>Journal</em>, 2023', note:'Journal names must be italicized in MLA.'},
+    {wrong:'No page numbers', correct:'pp. 100–115', note:'MLA requires page numbers for print sources.'},
+    {wrong:'Missing Works Cited label', correct:'Works Cited (page heading)', note:'MLA uses "Works Cited" not "References" or "Bibliography".'}
+  ],
+  chicago:[
+    {wrong:'(Smith 2023)', correct:'Smith (2023)', note:'Chicago author-date puts the year immediately after the author.'},
+    {wrong:'Missing access date for websites', correct:'Accessed March 15, 2024.', note:'Chicago requires access dates for online sources.'},
+    {wrong:'No publisher city', correct:'New York: Publisher', note:'Chicago includes place of publication before the publisher name.'}
+  ],
+  harvard:[
+    {wrong:'Smith J 2023', correct:'Smith, J., 2023.', note:'Harvard uses a comma after the last name and a period after the year.'},
+    {wrong:'No "Available at"', correct:'Available at: https://...', note:'Harvard requires "Available at:" before URLs.'},
+    {wrong:'Missing (Accessed: date)', correct:'(Accessed: 15 March 2024).', note:'Access date in parentheses is required for online sources.'}
+  ],
+  vancouver:[
+    {wrong:'Smith J.', correct:'Smith J', note:'Vancouver uses no period after initials.'},
+    {wrong:'Full journal name', correct:'Nat Hum Behav', note:'Vancouver requires abbreviated journal names (NLM style).'},
+    {wrong:'No numbered reference', correct:'1. Smith J...', note:'Vancouver references are numbered, not author-date.'}
+  ]
+};
+
+/* ─── STATE ─── */
+let currentStyle = 'apa';
+let currentType  = 'journal';
+
+/* ─── RENDER FORM ─── */
+function renderForm(){
+  const fields = FIELDS[currentType] || [];
+  const form = document.getElementById('citationForm');
+  form.className = 'form-grid';
+  form.innerHTML = fields.map(f=>`
+    <div class="field${f.full?' full':''}">
+      <label for="f_${f.id}">${f.label}</label>
+      <input id="f_${f.id}" type="text" placeholder="${f.placeholder}" oninput="updatePreview()"/>
+    </div>
+  `).join('');
+}
+
+/* ─── PREVIEW ─── */
+function updatePreview(){
+  const gen = generators[currentStyle];
+  const fn = gen && gen[currentType];
+  const raw = fn ? fn() : '';
+  const el = document.getElementById('previewCitation');
+  el.innerHTML = raw || '<span class="preview-empty">Your citation will appear here as you type…</span>';
+  document.getElementById('previewStyleTag').textContent = STYLES[currentStyle].label+' — '+TYPES[currentType];
+  updateCompare();
+}
+
+/* ─── COMPARE ─── */
+function updateCompare(){
+  const grid = document.getElementById('compareGrid');
+  const styleKeys = Object.keys(generators);
+  grid.innerHTML = styleKeys.map(s=>{
+    const fn = generators[s][currentType];
+    const text = fn ? fn() : '<span style="color:var(--ink-ghost);font-style:italic">—</span>';
+    return `<div class="compare-item">
+      <div class="compare-style-name">${STYLES[s].label}</div>
+      <div class="compare-citation">${text||'<span style="color:var(--ink-ghost);font-style:italic">Fill in fields above</span>'}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ─── ANATOMY ─── */
+function renderAnatomy(){
+  const parts = anatomy[currentType] || anatomy.journal;
+  document.getElementById('anatomyParts').innerHTML = parts.map(p=>`
+    <div class="anatomy-chip ${p.cls}">
+      <span class="chip-dot"></span>${p.label}
+      <div class="anatomy-tooltip">${p.tip}</div>
+    </div>
+  `).join('');
+}
+
+/* ─── MISTAKES ─── */
+function renderMistakes(){
+  const ms = mistakes[currentStyle] || [];
+  document.getElementById('mistakeStyleName').textContent = STYLES[currentStyle].label;
+  document.getElementById('mistakesContainer').innerHTML = ms.map(m=>`
+    <div class="mistake-row">
+      <div class="mistake-wrong"><div class="mistake-label wrong">✗ Wrong</div>${m.wrong}</div>
+      <div class="mistake-correct"><div class="mistake-label correct">✓ Correct</div>${m.correct}<br><small style="color:var(--ink-ghost);font-size:11px">${m.note}</small></div>
+    </div>
+  `).join('');
+}
+
+/* ─── COPY ─── */
+document.getElementById('copyBtn').addEventListener('click',()=>{
+  const text = document.getElementById('previewCitation').innerText;
+  if(!text || text.includes('appear here')) return;
+  navigator.clipboard.writeText(text).then(()=>{
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2000);
+  });
+});
+
+/* ─── RESET ─── */
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  document.querySelectorAll('#citationForm input').forEach(i=>i.value='');
+  updatePreview();
+});
+
+/* ─── STYLE BUTTONS ─── */
+document.querySelectorAll('.style-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.style-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentStyle = btn.dataset.style;
+    document.getElementById('currentStyleLabel').textContent = STYLES[currentStyle].label;
+    updatePreview();
+    renderMistakes();
+  });
+});
+
+/* ─── TYPE BUTTONS ─── */
+document.querySelectorAll('.type-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentType = btn.dataset.type;
+    document.getElementById('currentTypeLabel').textContent = 'Source: '+TYPES[currentType]+' — fill in the fields below.';
+    renderForm();
+    updatePreview();
+    renderAnatomy();
+  });
+});
+
+/* ─── INIT ─── */
+renderForm();
+updatePreview();
+renderAnatomy();
+renderMistakes();
+</script>
+</body>
+</html>
