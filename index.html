@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Readime — Research That Puts People First</title>
-  <link rel="icon" type="image/x-icon" href="favicon.svg">
+  <title>Readime — Research That Puts People First.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -266,6 +265,114 @@
     }
     .footer-bottom p { font-size: 12px; }
 
+    /* ── NAV DROPDOWNS ── */
+    .nav-item { position: relative; list-style: none; }
+    .nav-item > a { display: flex; align-items: center; gap: 5px; }
+    .nav-item > a svg { transition: transform 0.2s; }
+    .nav-item:hover > a svg { transform: rotate(180deg); }
+    .nav-dropdown {
+      position: absolute; top: 100%; left: 50%;
+      padding-top: 12px; /* bridge gap so cursor can travel to dropdown */
+      min-width: 220px;
+      opacity: 0; pointer-events: none;
+      transform: translateX(-50%) translateY(-6px);
+      transition: opacity 0.2s, transform 0.2s; z-index: 300;
+    }
+    .nav-dropdown-inner {
+      background: #fff; border: 1px solid var(--rule);
+      box-shadow: 0 8px 40px rgba(0,0,48,0.1);
+    }
+    nav.scrolled .nav-dropdown-inner { background: #0a0a40; border-color: rgba(255,255,255,0.08); }
+    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 20px; text-decoration: none; transition: background 0.15s;
+      border-bottom: 1px solid var(--rule);
+    }
+    nav.scrolled .nav-dropdown-item { border-bottom-color: rgba(255,255,255,0.06); }
+    .nav-dropdown-item:last-child { border-bottom: none; }
+    .nav-dropdown-item:hover { background: rgba(0,0,48,0.04); }
+    nav.scrolled .nav-dropdown-item:hover { background: rgba(255,255,255,0.05); }
+    .nav-dd-icon {
+      width: 32px; height: 32px; background: var(--bg); border: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    nav.scrolled .nav-dd-icon { background: rgba(224,237,255,0.08); border-color: rgba(255,255,255,0.1); }
+    .nav-dd-text {}
+    .nav-dd-name {
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500;
+      color: var(--ink); display: block; margin-bottom: 2px;
+    }
+    nav.scrolled .nav-dd-name { color: #E0EDFF; }
+    .nav-dd-desc { font-size: 11px; color: var(--ink-ghost); line-height: 1.4; }
+    nav.scrolled .nav-dd-desc { color: rgba(224,237,255,0.4); }
+
+    /* ── SERVICES SECTION ── */
+    .services-wrap { max-width: 960px; margin: 0 auto; }
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 0; }
+    .service-card {
+      background: var(--surface); padding: 40px; border: 1px solid var(--rule);
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+    .service-card:hover { box-shadow: 0 4px 32px rgba(0,0,48,0.08); background: #f8fbff; }
+    .service-num {
+      font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; color: var(--ink-ghost); margin-bottom: 20px;
+    }
+    .service-name {
+      font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 500;
+      letter-spacing: -0.5px; margin-bottom: 12px; line-height: 1.2;
+    }
+    .service-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.75; }
+
+    /* ── PRODUCTS SECTION ── */
+    .products-wrap { max-width: 960px; margin: 0 auto; }
+    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .product-card {
+      background: var(--surface); border: 1px solid var(--rule); overflow: hidden;
+      text-decoration: none; display: block; position: relative;
+      transition: box-shadow 0.25s;
+    }
+    .product-card:hover { box-shadow: 0 8px 48px rgba(0,0,48,0.1); }
+    .product-card-body { padding: 36px; }
+    .product-badge {
+      display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 4px 10px; background: var(--bg);
+      border: 1px solid var(--rule); color: var(--ink-ghost); margin-bottom: 20px;
+    }
+    .product-name {
+      font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600;
+      letter-spacing: -0.5px; color: var(--ink); margin-bottom: 10px;
+    }
+    .product-tagline { font-size: 13px; color: var(--ink-muted); line-height: 1.65; margin-bottom: 28px; }
+    .product-hover-panel {
+      position: absolute; inset: 0; background: var(--ink); padding: 36px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      opacity: 0; transition: opacity 0.25s; pointer-events: none;
+    }
+    .product-card:hover .product-hover-panel { opacity: 1; pointer-events: all; }
+    .product-hover-title {
+      font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600;
+      color: #E0EDFF; letter-spacing: -0.5px; margin-bottom: 12px;
+    }
+    .product-hover-desc { font-size: 13px; color: rgba(224,237,255,0.6); line-height: 1.7; margin-bottom: 24px; }
+    .product-hover-features { list-style: none; margin-bottom: 28px; }
+    .product-hover-features li {
+      font-size: 12px; color: rgba(224,237,255,0.5); padding: 6px 0;
+      border-bottom: 1px solid rgba(224,237,255,0.07); display: flex; align-items: center; gap: 8px;
+    }
+    .product-hover-features li::before { content: '→'; color: rgba(224,237,255,0.3); font-size: 11px; }
+    .product-hover-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500;
+      color: #E0EDFF; text-decoration: none; letter-spacing: 0.04em;
+      border-bottom: 1px solid rgba(224,237,255,0.3); padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .product-hover-cta:hover { border-color: #E0EDFF; }
+    .product-soon { opacity: 0.45; cursor: default; }
+    .product-soon .product-hover-panel { display: none; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 0 24px; }
@@ -276,7 +383,8 @@
       .hero { padding: 90px 24px 60px; }
       .about-grid { grid-template-columns: 1fr; gap: 36px; }
       .papers-grid { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       footer { padding: 56px 24px 32px; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
@@ -291,8 +399,10 @@
 
 <!-- MOBILE MENU OVERLAY -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#about" class="mob-link">About</a>
+  <a href="#products" class="mob-link">Products</a>
+  <a href="#services" class="mob-link">Services</a>
   <a href="#research" class="mob-link">Research</a>
+  <a href="#about" class="mob-link">About</a>
   <a href="#contact" class="mob-link">Contact</a>
 </div>
 
@@ -300,8 +410,47 @@
 <nav id="navbar">
   <a href="#" class="nav-logo">Readime</a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
+
+    <!-- Products dropdown -->
+    <li class="nav-item">
+      <a href="#products">Products <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+          <a href="readime-cite.html" class="nav-dropdown-item">
+            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+            <div class="nav-dd-text"><span class="nav-dd-name">Readime Cite</span><span class="nav-dd-desc">Free citation formatting tool</span></div>
+          </a>
+        </div>
+      </div>
+    </li>
+
+    <!-- Services dropdown -->
+    <li class="nav-item">
+      <a href="#services">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+          <a href="#services" class="nav-dropdown-item">
+            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+            <div class="nav-dd-text"><span class="nav-dd-name">Literature Review</span><span class="nav-dd-desc">Systematic reviews &amp; synthesis</span></div>
+          </a>
+          <a href="#services" class="nav-dropdown-item">
+            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+            <div class="nav-dd-text"><span class="nav-dd-name">Survey Design</span><span class="nav-dd-desc">Instrument design &amp; analysis</span></div>
+          </a>
+          <a href="#services" class="nav-dropdown-item">
+            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div class="nav-dd-text"><span class="nav-dd-name">Data Analysis</span><span class="nav-dd-desc">Qualitative &amp; quantitative methods</span></div>
+          </a>
+          <a href="#services" class="nav-dropdown-item">
+            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="nav-dd-text"><span class="nav-dd-name">Research Consulting</span><span class="nav-dd-desc">End-to-end research guidance</span></div>
+          </a>
+        </div>
+      </div>
+    </li>
+
     <li><a href="#research">Research</a></li>
+    <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <button class="burger" id="burger" aria-label="Toggle menu">
@@ -372,43 +521,130 @@
     <h2 class="section-heading">Recent <strong>Publications</strong></h2>
     <div class="cat-filter">
       <button class="cat-btn active" data-cat="all">All</button>
-      <button class="cat-btn" data-cat="agritech">Agritech</button>
-      <button class="cat-btn" data-cat="bci">BCI</button>
+      <button class="cat-btn" data-cat="cognition">Cognition</button>
       <button class="cat-btn" data-cat="technology">Technology &amp; Society</button>
-      <button class="cat-btn" data-cat="aiml">AI &amp; ML</button>
+      <button class="cat-btn" data-cat="language">Language</button>
       <button class="cat-btn" data-cat="health">Health &amp; Behavior</button>
       <button class="cat-btn" data-cat="ethics">Ethics</button>
-      <button class="cat-btn" data-cat="energysys">Energy Systems</button>
     </div>
     <div class="papers-grid">
-      <div class="paper-card" data-cat="agritech">
-        <p class="paper-tag">Agritech</p>
-        <h3 class="paper-title">An Efficient Deep Learning Based Mobile Application for Pigeon Pea Disease Classification</h3>
-        <p class="paper-authors">P.K. Chaudhary, S.K. Chaudhary, U.K. Karn, D. Neupane, R.K. Yadav, D.P. Guragain, B. Shrestha</p>
-        <p class="paper-abstract">About 65 percent of Nepal's population depends on agriculture, with pigeon pea ('Rahar') being a key legume crop for traditional food products. Frequent disease outbreaks, coupled with limited access to agronomists and challenging terrain, force small-scale farmers to rely on manual visual inspection, often resulting in delayed or inaccurate disease identification and excessive pesticide use.</p>
-        <a href="https://ieeexplore.ieee.org/document/11485179" target="_blank" class="paper-link">Read paper →</a>
+      <div class="paper-card" data-cat="cognition">
+        <p class="paper-tag">Cognition</p>
+        <h3 class="paper-title">Attention Fragmentation in the Age of Ambient Notifications</h3>
+        <p class="paper-authors">A. Mehta, S. Okonkwo, R. Tanaka · 2024</p>
+        <p class="paper-abstract">An empirical study examining how persistent notification environments alter sustained attention patterns across age groups, with implications for learning and workplace design.</p>
+        <a href="#" class="paper-link">Read paper →</a>
       </div>
       <div class="paper-card" data-cat="technology">
         <p class="paper-tag">Technology &amp; Society</p>
-        <h3 class="paper-title">An AI-Driven CNN–LSTM Framework for Multi-Stage Driver Drowsiness Detection with Real-Time Mobile Alerts</h3>
-        <p class="paper-authors">R.K. Yadav, P.K. Chaudhary, G. Jha, R.D. Shrestha, R.K. Pudasaini</p>
-        <p class="paper-abstract">Driver fatigue is a prominent source of traffic accidents and requires the need for accurate real-time detection algorithms. In this paper, the authors propose the design of "DrowsyDriveNet," a hybrid deep learning architecture that is capable of classifying the driver alertness level into four stages: "Alert," "Slight," "Moderate," and "Severe."</p>
-        <a href="https://ieeexplore.ieee.org/document/11485404" target="_blank" class="paper-link">Read paper →</a>
+        <h3 class="paper-title">Infrastructural Asymmetry: Who Benefits from Algorithmic Curation?</h3>
+        <p class="paper-authors">L. Ferreira, J. Park · 2024</p>
+        <p class="paper-abstract">A comparative analysis of how content recommendation systems systematically advantage certain demographic groups while others experience reduced epistemic access.</p>
+        <a href="#" class="paper-link">Read paper →</a>
+      </div>
+      <div class="paper-card" data-cat="language">
+        <p class="paper-tag">Language</p>
+        <h3 class="paper-title">Metaphor as Infrastructure: How Language Shapes Policy Imagination</h3>
+        <p class="paper-authors">D. Osei, C. Lindqvist · 2023</p>
+        <p class="paper-abstract">Drawing on corpus linguistics and policy analysis, this paper demonstrates how dominant metaphors in governance discourse constrain the range of imaginable policy solutions.</p>
+        <a href="#" class="paper-link">Read paper →</a>
       </div>
       <div class="paper-card" data-cat="health">
         <p class="paper-tag">Health &amp; Behavior</p>
-        <h3 class="paper-title">A Novel Approach in Sanitary Pad Vending Machine using Image Processing & Internet of Things</h3>
-        <p class="paper-authors">B. Paneru, P.K. Chaudhary</p>
-        <p class="paper-abstract">Women's empowerment is a well-known and intriguing subject. Every business and institution should place a priority on the health and privacy of women because they are the foundation of society. The women must be given access to facilities that will improve sanitation and menstrual hygiene for this reason. In order to make women's pads conveniently accessible at their workplaces or other public locations,</p>
-        <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.170629334.48523426/v1" target="_blank" class="paper-link">Read paper →</a>
+        <h3 class="paper-title">Trust Erosion and Healthcare Avoidance in Underserved Communities</h3>
+        <p class="paper-authors">M. Nguyen, B. Santos, K. Adeyemi · 2023</p>
+        <p class="paper-abstract">A longitudinal study exploring the relationship between institutional trust, prior adverse healthcare experiences, and patterns of medical avoidance across three urban contexts.</p>
+        <a href="#" class="paper-link">Read paper →</a>
       </div>
-      <div class="paper-card" data-cat="aiml">
-        <p class="paper-tag">AI &amp; ML</p>
-        <h3 class="paper-title">Multi-Class Fault Type Classification Using Sequence Components and Wavelet Features with Comparative Study of Machine Learning Models and Neural Networks</h3>
-        <p class="paper-authors">S.K. Chaudhary, S. Khanal, P.K. Chaudhary, B. Pancha, J.K. Yadav</p>
-        <p class="paper-abstract">The growing complexity of modern power networks requires intelligent fault classification techniques capable of handling multiple fault conditions with high accuracy. Classifying faults in transmission lines with higher accuracy is very important to provide reliability to the power system along with a shorter fault clearance time. </p>
-        <a href="https://ieeexplore.ieee.org/document/11485076" target="_blank" class="paper-link">Read paper →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-wrap">
+    <div class="section-label">Services</div>
+    <h2 class="section-heading">What we <strong>do for you.</strong></h2>
+    <p style="max-width:480px;color:var(--ink-muted);font-size:15px;line-height:1.8;margin-bottom:56px;">We partner with organizations, institutions, and independent researchers to design and conduct rigorous, human-centered research.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-name">Literature Review</div>
+        <p class="service-desc">Comprehensive, systematic reviews of existing research. We map the landscape of a field, identify gaps, and synthesize findings into clear, actionable summaries that anchor your work.</p>
       </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-name">Survey Design</div>
+        <p class="service-desc">From question construction to sampling strategy and statistical analysis, we design surveys that yield reliable, meaningful data — and help you interpret what it all means.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-name">Data Analysis</div>
+        <p class="service-desc">Qualitative coding, thematic analysis, regression, and mixed-methods approaches. We work with your existing data or help you design collection instruments from scratch.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-name">Research Consulting</div>
+        <p class="service-desc">End-to-end research partnership — from defining your research question through methodology selection, ethics review, fieldwork, and final reporting tailored for your audience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-wrap">
+    <div class="section-label">Products</div>
+    <h2 class="section-heading">Tools built for <strong>researchers.</strong></h2>
+    <p style="max-width:480px;color:var(--ink-muted);font-size:15px;line-height:1.8;margin-bottom:56px;">Free, browser-based tools that make research work faster, clearer, and more accessible — no account required.</p>
+    <div class="products-grid">
+
+      <!-- Readime Cite -->
+      <a href="readime-cite.html" class="product-card">
+        <div class="product-card-body">
+          <div class="product-badge">Free Tool</div>
+          <div class="product-name">Readime Cite</div>
+          <p class="product-tagline">Cite with confidence. Format references in APA, IEEE, MLA, Chicago, Harvard and more — right in your browser.</p>
+          <span style="font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:1px;">Open tool →</span>
+        </div>
+        <div class="product-hover-panel">
+          <div>
+            <div class="product-hover-title">Readime Cite</div>
+            <p class="product-hover-desc">A free citation learning and formatting tool. Build, compare, and understand citations for every major style — all locally in your browser.</p>
+            <ul class="product-hover-features">
+              <li>APA 7, IEEE, MLA 9, Chicago, Harvard, Vancouver</li>
+              <li>20+ source types — journals, websites, AI tools & more</li>
+              <li>Live preview as you type</li>
+              <li>Side-by-side style comparison</li>
+              <li>Color-coded citation anatomy</li>
+              <li>No login, no data leaves your browser</li>
+            </ul>
+          </div>
+          <a href="readime-cite.html" class="product-hover-cta">Start citing →</a>
+        </div>
+      </a>
+
+      <!-- Coming soon cards -->
+      <div class="product-card product-soon">
+        <div class="product-card-body">
+          <div class="product-badge">Coming Soon</div>
+          <div class="product-name">Readime Survey</div>
+          <p class="product-tagline">Design research-grade surveys with built-in validity checks and response analysis — no backend needed.</p>
+        </div>
+      </div>
+
+      <div class="product-card product-soon">
+        <div class="product-card-body">
+          <div class="product-badge">Coming Soon</div>
+          <div class="product-name">Readime Review</div>
+          <p class="product-tagline">A structured tool for systematic literature reviews — track sources, themes, and synthesis in one place.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -425,7 +661,7 @@
     </p>
 
     <!-- Primary CTA -->
-    <a href="mailto:readimeapp@gmail.com?subject=Let%27s%20Collaborate" class="collab-btn">
+    <a href="mailto:hello@readime.org?subject=Let%27s%20Collaborate" class="collab-btn">
       <span class="collab-btn-icon">
         <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="0.5" y="0.5" width="17" height="13" rx="0.5" stroke="currentColor" stroke-opacity="0.7"/>
@@ -434,6 +670,7 @@
       </span>
       <span class="collab-btn-text">
         <span class="collab-btn-label">Let's Collaborate</span>
+        <span class="collab-btn-sub">hello@readime.org</span>
       </span>
       <span class="collab-btn-arrow">→</span>
     </a>
@@ -442,23 +679,23 @@
     <div class="contact-socials-block">
       <p class="socials-label">Find us online</p>
       <div class="contact-socials">
-        <a href="https://x.com/readimehq" target="_blank" rel="noopener" class="contact-social-link" title="X / Twitter">
+        <a href="#" class="contact-social-link" title="X / Twitter">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           <span>Twitter / X</span>
         </a>
-        <a href="https://www.linkedin.com/company/readime" target="_blank" class="contact-social-link" title="LinkedIn">
+        <a href="#" class="contact-social-link" title="LinkedIn">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           <span>LinkedIn</span>
         </a>
-        <a href="https://github.com/prabhatkch" target="_blank" class="contact-social-link" title="GitHub">
+        <a href="#" class="contact-social-link" title="GitHub">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <span>GitHub</span>
         </a>
-        <a href="https://www.facebook.com/readimehq" target="_blank" class="contact-social-link" title="Facebook">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.009 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.514c-1.491 0-1.956.926-1.956 1.875v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.082 24 18.092 24 12.073z"/></svg>
-          <span>Facebook</span>
+        <a href="#" class="contact-social-link" title="Substack">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          <span>Substack</span>
         </a>
-        <a href="https://instagram.com/readimehq" class="contact-social-link" title="Instagram">
+        <a href="#" class="contact-social-link" title="Instagram">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
           <span>Instagram</span>
         </a>
@@ -474,12 +711,10 @@
       <div class="footer-logo">Readime</div>
       <p class="footer-tagline">Independent research that keeps the human at the center of every question we ask.</p>
       <div class="footer-socials">
-        <a href="https://x.com/readimehq" target="_blank" rel="noopener">X</a>
-        <a href="https://www.linkedin.com/company/readime" target="_blank" rel="noopener">IN</a>
-        <a href="https://www.youtube.com/@readime" target="_blank" rel="noopener">YT</a>
-        <a href="https://www.facebook.com/readimehq" target="_blank" rel="noopener">FB</a>
-        <a href="https://www.instagram.com/readimehq" target="_blank" rel="noopener">IG</a>
-        <a href="https://www.tiktok.com/@readime.com" target="_blank" rel="noopener">TK</a>
+        <a href="#" title="X">𝕏</a>
+        <a href="#" title="LinkedIn">in</a>
+        <a href="#" title="GitHub">gh</a>
+        <a href="#" title="RSS">rss</a>
       </div>
     </div>
     <div class="footer-col">
@@ -488,48 +723,32 @@
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="#">Newsletter</a></li>
+        <li><a href="#">Press Kit</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Readime Talks</h5>
-      <p class="sub-desc">Conversations that challenge perspectives and spark new ideas.</p>
+      <p class="sub-desc">Our public lecture series exploring ideas at the frontier of human-centered inquiry.</p>
       <div class="sub-socials">
-        <a href="https://www.youtube.com/@readimetalks" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://www.instagram.com/readimetalks" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.linkedin.com/company/readimetalks" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.facebook.com/readimetalks" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.tiktok.com/@readimetalks" target="_blank" rel="noopener">TikTok</a>
-        <a href="https://x.com/readimetalks" target="_blank" rel="noopener">X</a>
+        <a href="#">YouTube</a>
+        <a href="#">Spotify</a>
+        <a href="#">Apple Podcasts</a>
       </div>
     </div>
     <div class="footer-col">
       <h5>Readime Reality</h5>
-      <p class="sub-desc">Research-driven documentaries uncovering the forces shaping our world.</p>
+      <p class="sub-desc">Our newsletter and editorial platform connecting research to everyday life.</p>
       <div class="sub-socials">
-        <a href="https://www.youtube.com/@readimereality" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://www.instagram.com/readimereality" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.linkedin.com/company/readimereality" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.facebook.com/readimereality" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.tiktok.com/@readimereality" target="_blank" rel="noopener">TikTok</a>
-        <a href="https://x.com/readimereality" target="_blank" rel="noopener">X</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5>Readime Institute</h5>
-      <p class="sub-desc">Advancing learning through research, critical thinking, and deep understanding.</p>
-      <div class="sub-socials">
-        <a href="https://www.youtube.com/@ReadimeInstitute" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://www.instagram.com/readimeinstitute" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.linkedin.com/company/readimeinstitute" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.facebook.com/ReadimeInstitute" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.tiktok.com/@readimeinstitute" target="_blank" rel="noopener">TikTok</a>
-        <a href="https://x.com/readimeinstitute" target="_blank" rel="noopener">X</a>
+        <a href="#">Substack</a>
+        <a href="#">Instagram</a>
+        <a href="#">X</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 Readime. All rights reserved.</p>
-    <p>Readime</p>
+    <p>© 2024 Readime. All rights reserved.</p>
+    <p>hello@readime.org</p>
   </div>
 </footer>
 
@@ -613,14 +832,18 @@ catBtns.forEach(btn => {
   const PTS = 80;
 
   function project(lat, lng) {
+    // Rotate by rotY (around Y) then rotX (around X)
     const φ = lat * Math.PI / 180;
     const λ = lng * Math.PI / 180;
+    // 3D point on unit sphere
     let x0 = Math.cos(φ) * Math.sin(λ);
     let y0 = Math.sin(φ);
     let z0 = Math.cos(φ) * Math.cos(λ);
+    // rotate around Y axis by rotY
     const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
     let x1 = x0 * cosY + z0 * sinY;
     let z1 = -x0 * sinY + z0 * cosY;
+    // rotate around X axis by rotX
     const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
     let y2 = y0 * cosX - z1 * sinX;
     let z2 = y0 * sinX + z1 * cosX;
@@ -645,12 +868,14 @@ catBtns.forEach(btn => {
   function draw() {
     ctx.clearRect(0, 0, SIZE, SIZE);
 
+    // Outer circle
     ctx.beginPath();
     ctx.arc(cx, cy, R, 0, Math.PI * 2);
     ctx.strokeStyle = 'rgba(0,0,48,0.22)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
+    // Latitude lines
     LAT_LINES.forEach(lat => {
       const pts = [];
       for (let i = 0; i <= PTS; i++) {
@@ -659,6 +884,7 @@ catBtns.forEach(btn => {
       drawArc(pts, 0.13, 0.8);
     });
 
+    // Longitude lines
     LNG_LINES.forEach(lng => {
       const pts = [];
       for (let i = 0; i <= PTS; i++) {
@@ -667,20 +893,25 @@ catBtns.forEach(btn => {
       drawArc(pts, 0.13, 0.8);
     });
 
+    // Equator highlight
     const eq = [];
     for (let i = 0; i <= PTS; i++) eq.push(project(0, (i / PTS) * 360 - 180));
     drawArc(eq, 0.28, 1.2);
 
+    // Prime meridian highlight
     const pm = [];
     for (let i = 0; i <= PTS; i++) pm.push(project(-90 + (i / PTS) * 180, 0));
     drawArc(pm, 0.18, 1.0);
 
+    // Center dot
     ctx.beginPath();
     ctx.arc(cx, cy, 2.5, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(0,0,48,0.2)';
     ctx.fill();
 
+    // Mouse interaction: subtle highlight dot on globe surface
     if (hoverActive) {
+      // convert mouse norm to lat/lng roughly
       const hx = cx + mouseNorm.x * R * 0.8;
       const hy = cy + mouseNorm.y * R * 0.8;
       ctx.beginPath();
@@ -692,18 +923,21 @@ catBtns.forEach(btn => {
 
   function animate() {
     if (!dragging) {
+      // drift influenced slightly by mouse hover
       const targetVelX = hoverActive ? mouseNorm.y * 0.0012 : 0;
       const targetVelY = hoverActive ? 0.002 + mouseNorm.x * 0.004 : 0.004;
       velX += (targetVelX - velX) * 0.04;
       velY += (targetVelY - velY) * 0.04;
       rotX += velX;
       rotY += velY;
+      // clamp tilt
       rotX = Math.max(-0.55, Math.min(0.55, rotX));
     }
     draw();
     requestAnimationFrame(animate);
   }
 
+  // Mouse drag on wrap
   wrap.addEventListener('mousedown', e => {
     dragging = true;
     lastX = e.clientX; lastY = e.clientY;
@@ -725,9 +959,11 @@ catBtns.forEach(btn => {
   });
   window.addEventListener('mouseup', () => { dragging = false; });
 
+  // Mouse enter/leave
   wrap.addEventListener('mouseenter', () => { hoverActive = true; });
   wrap.addEventListener('mouseleave', () => { hoverActive = false; mouseNorm = { x: 0, y: 0 }; });
 
+  // Touch drag on wrap
   wrap.addEventListener('touchstart', e => {
     dragging = true;
     lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
