@@ -139,6 +139,7 @@
     .brand-hero {
       padding: 150px 48px 90px; text-align: center;
       display: flex; flex-direction: column; align-items: center;
+      position: relative; overflow: hidden;
     }
     .brand-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -149,13 +150,45 @@
     .brand-title {
       font-family: 'Space Grotesk', sans-serif; font-size: clamp(32px, 6vw, 64px);
       font-weight: 300; letter-spacing: -2px; line-height: 1.05; color: var(--ink); margin-bottom: 20px;
+      position: relative; z-index: 1;
     }
     .brand-title em { font-style: normal; font-weight: 600; }
     .brand-sub {
       max-width: 480px; font-size: 15px; font-weight: 300; color: var(--ink-muted);
       line-height: 1.8; margin-bottom: 36px;
+      position: relative; z-index: 1;
     }
-    .brand-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .brand-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+    /* ── REALITY GRID BACKGROUND (world / evidence dots) ── */
+    .reality-grid {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      display: grid; grid-template-columns: repeat(16, 1fr); grid-template-rows: repeat(9, 1fr);
+      place-items: center; gap: 4px;
+      opacity: 0.16;
+      -webkit-mask-image: radial-gradient(ellipse 52% 62% at center, black 50%, transparent 92%);
+      mask-image: radial-gradient(ellipse 52% 62% at center, black 50%, transparent 92%);
+      transition: opacity 0.4s ease;
+    }
+    .reality-grid span {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--ink);
+      animation: dotPulse 2.6s ease-in-out infinite;
+      transition: transform 0.15s ease-out;
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.35; transform: scale(calc(0.55 * var(--boost, 1))); }
+      50% { opacity: 1; transform: scale(calc(1 * var(--boost, 1))); }
+    }
+    .reality-grid span:nth-child(2n) { animation-duration: 3.1s; }
+    .reality-grid span:nth-child(3n) { animation-duration: 2.2s; }
+    .reality-grid span:nth-child(4n) { animation-duration: 3.6s; }
+    .reality-grid span:nth-child(5n) { animation-duration: 2.9s; }
+    .reality-grid span:nth-child(7n) { animation-duration: 2.4s; }
+    .reality-grid span:nth-child(11n) { animation-duration: 3.3s; }
+    .reality-grid span:nth-child(3n+1) { animation-delay: 0.15s; }
+    .reality-grid span:nth-child(5n+2) { animation-delay: 0.4s; }
+    .reality-grid span:nth-child(7n+3) { animation-delay: 0.65s; }
+    .reality-grid span:nth-child(11n+4) { animation-delay: 0.9s; }
 
     /* ── ABOUT / INTRO ── */
     .intro-wrap { max-width: 720px; margin: 0 auto; text-align: left; }
@@ -173,6 +206,10 @@
       aspect-ratio: 16/9; width: 100%; position: relative;
       background: linear-gradient(135deg, #000030 0%, #232360 100%);
       display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .video-thumb iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
     }
     .video-thumb .play-btn {
       width: 52px; height: 52px; border-radius: 50%; background: rgba(224,237,255,0.12);
@@ -218,7 +255,7 @@
     .promo-card-name { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 500; color: #E0EDFF; margin-bottom: 8px; letter-spacing: -0.2px; }
     .promo-card-desc { font-size: 12.5px; color: rgba(224,237,255,0.5); line-height: 1.6; margin-bottom: 16px; }
     .promo-card-cta { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(224,237,255,0.8); }
-    .promo-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .promo-ctas { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
     /* ── FOOTER ── */
     footer { background: var(--ink); color: rgba(224,237,255,0.55); padding: 72px 48px 40px; }
@@ -431,7 +468,7 @@
 
 <!-- BRAND HERO -->
 <section class="brand-hero">
-  <div class="brand-badge"><span class="dot"></span>Readime Reality</div>
+  <div class="reality-grid" aria-hidden="true" id="realityGrid"></div>
   <h1 class="brand-title">Evidence in<br/><em>Action.</em></h1>
   <p class="brand-sub">Explaining research through real-world stories, case studies, documentaries, and evidence-based content.</p>
   <div class="brand-ctas">
@@ -459,30 +496,30 @@
     <div class="section-label">Watch</div>
     <h2 class="section-heading">Featured Stories</h2>
     <div class="video-grid">
-      <a href="#" class="video-card">
-        <div class="video-thumb"><span class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7-11-7z" fill="#E0EDFF" fill-opacity="0.85"/></svg></span></div>
+      <div class="video-card">
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/cVp-GCz-cNE" title="Trust Erosion and Healthcare Avoidance, Explained" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="video-body">
           <div class="video-tag">Case Study</div>
           <div class="video-title">Trust Erosion and Healthcare Avoidance, Explained</div>
           <div class="video-meta">Documentary short · 22 min</div>
         </div>
-      </a>
-      <a href="#" class="video-card">
-        <div class="video-thumb"><span class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7-11-7z" fill="#E0EDFF" fill-opacity="0.85"/></svg></span></div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/cVp-GCz-cNE" title="How Language Shapes the Policies We're Offered" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="video-body">
           <div class="video-tag">Explainer</div>
           <div class="video-title">How Language Shapes the Policies We're Offered</div>
           <div class="video-meta">Video essay · 15 min</div>
         </div>
-      </a>
-      <a href="#" class="video-card">
-        <div class="video-thumb"><span class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7-11-7z" fill="#E0EDFF" fill-opacity="0.85"/></svg></span></div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/cVp-GCz-cNE" title="Inside Three Communities Rebuilding Institutional Trust" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="video-body">
           <div class="video-tag">Field Report</div>
           <div class="video-title">Inside Three Communities Rebuilding Institutional Trust</div>
           <div class="video-meta">Documentary · 31 min</div>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </section>
@@ -493,7 +530,7 @@
 <section id="follow">
   <div class="socials-wrap">
     <div class="section-label">Find Us Online</div>
-    <h2 class="section-heading">Follow Readime <strong>Readime Reality.</strong></h2>
+    <h2 class="section-heading">Follow <strong>Readime Reality.</strong></h2>
     <div class="contact-socials">
         <a href="#" class="contact-social-link" title="X / Twitter">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -550,7 +587,6 @@
     </div>
     <div class="promo-ctas">
       <a href="index.html#contact" class="btn-primary" style="background:#E0EDFF;color:#000030;">Work With Us</a>
-      <a href="index.html" class="btn-ghost-light">Visit Readime.org</a>
     </div>
   </div>
 </section>
@@ -662,6 +698,57 @@ document.querySelectorAll('.mob-toggle').forEach(btn => {
     target.classList.toggle('open', isOpen);
   });
 });
+
+/* ── REALITY GRID: populate dots + cursor reactivity ── */
+(function () {
+  const heroSection = document.querySelector('.brand-hero');
+  const grid = document.getElementById('realityGrid');
+  if (!heroSection || !grid) return;
+
+  const COLS = 16, ROWS = 9;
+  for (let i = 0; i < COLS * ROWS; i++) {
+    const dot = document.createElement('span');
+    grid.appendChild(dot);
+  }
+  const dots = Array.from(grid.querySelectorAll('span'));
+
+  let ticking = false;
+  let lastPoint = null;
+
+  function applyBoost(mx, my) {
+    dots.forEach(dot => {
+      const r = dot.getBoundingClientRect();
+      const gridRect = grid.getBoundingClientRect();
+      const cx = r.left + r.width / 2 - gridRect.left;
+      const cy = r.top + r.height / 2 - gridRect.top;
+      const dx = mx - cx, dy = my - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const boost = 1 + 1.6 * Math.exp(-(dist * dist) / (2 * 90 * 90));
+      dot.style.setProperty('--boost', boost.toFixed(2));
+    });
+  }
+
+  function resetBoost() {
+    dots.forEach(dot => dot.style.setProperty('--boost', 1));
+  }
+
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = grid.getBoundingClientRect();
+    lastPoint = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        if (lastPoint) applyBoost(lastPoint.x, lastPoint.y);
+        ticking = false;
+      });
+    }
+  });
+
+  heroSection.addEventListener('mouseleave', () => {
+    lastPoint = null;
+    resetBoost();
+  });
+})();
 </script>
 
 </body>
