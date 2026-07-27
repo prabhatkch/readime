@@ -45,7 +45,7 @@
       letter-spacing: -0.5px; color: var(--ink); text-decoration: none; transition: color 0.35s; z-index: 201;
     }
     nav.scrolled .nav-logo, nav.menu-open .nav-logo { color: #E0EDFF; }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; height: 100%; }
     .nav-links a {
       font-size: 13px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase;
       color: var(--ink-muted); text-decoration: none; transition: color 0.2s;
@@ -103,44 +103,33 @@
     .mob-sublink:hover { color: #E0EDFF; }
 
     /* ── NAV DROPDOWNS ── */
-    .nav-item { position: relative; list-style: none; }
+    .nav-item { position: relative; list-style: none; display: flex; align-items: center; }
     .nav-item > a { display: flex; align-items: center; gap: 5px; }
     .nav-item > a svg { transition: transform 0.2s; }
     .nav-item:hover > a svg { transform: rotate(180deg); }
     .nav-dropdown {
       position: absolute; top: 100%; left: 50%;
-      padding-top: 12px; min-width: 220px;
+      padding-top: 8px; min-width: 160px;
       opacity: 0; pointer-events: none;
-      transform: translateX(-50%) translateY(-6px);
-      transition: opacity 0.2s, transform 0.2s; z-index: 300;
+      transform: translateX(-50%) translateY(-4px);
+      transition: opacity 0.18s, transform 0.18s; z-index: 300;
     }
     .nav-dropdown-inner {
       background: #fff; border: 1px solid var(--rule);
-      box-shadow: 0 8px 40px rgba(0,0,48,0.1);
+      box-shadow: 0 6px 24px rgba(0,0,48,0.1);
+      padding: 4px 0;
     }
-    nav.scrolled .nav-dropdown-inner { background: #0a0a40; border-color: rgba(255,255,255,0.08); }
+    nav.scrolled .nav-dropdown-inner { background: #0d0d3a; border-color: rgba(255,255,255,0.08); }
     .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
     .nav-dropdown-item {
-      display: flex; align-items: flex-start; gap: 14px;
-      padding: 16px 20px; text-decoration: none; transition: background 0.15s;
-      border-bottom: 1px solid var(--rule);
+      display: block; padding: 8px 16px;
+      font-size: 12px; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--ink-muted); text-decoration: none; transition: background 0.12s, color 0.12s;
+      white-space: nowrap;
     }
-    nav.scrolled .nav-dropdown-item { border-bottom-color: rgba(255,255,255,0.06); }
-    .nav-dropdown-item:last-child { border-bottom: none; }
-    .nav-dropdown-item:hover { background: rgba(0,0,48,0.04); }
-    nav.scrolled .nav-dropdown-item:hover { background: rgba(255,255,255,0.05); }
-    .nav-dd-icon {
-      width: 32px; height: 32px; background: var(--bg); border: 1px solid var(--rule);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
-    }
-    nav.scrolled .nav-dd-icon { background: rgba(224,237,255,0.08); border-color: rgba(255,255,255,0.1); }
-    .nav-dd-name {
-      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500;
-      color: var(--ink); display: block; margin-bottom: 2px;
-    }
-    nav.scrolled .nav-dd-name { color: #E0EDFF; }
-    .nav-dd-desc { font-size: 11px; color: var(--ink-ghost); line-height: 1.4; }
-    nav.scrolled .nav-dd-desc { color: rgba(224,237,255,0.4); }
+    .nav-dropdown-item:hover { background: var(--bg); color: var(--ink); }
+    nav.scrolled .nav-dropdown-item { color: rgba(224,237,255,0.55); }
+    nav.scrolled .nav-dropdown-item:hover { background: rgba(255,255,255,0.07); color: #E0EDFF; }
 
     /* ── SHARED ── */
     section { padding: clamp(56px, 8vw, 96px) var(--sp); }
@@ -521,53 +510,26 @@
     <li class="nav-item">
       <a href="#products">Products <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
       <div class="nav-dropdown"><div class="nav-dropdown-inner">
-        <a href="readime-cite.html" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">Readime Cite</span><span class="nav-dd-desc">Free citation formatting tool</span></div>
-        </a>
+        <a href="readime-cite.html" class="nav-dropdown-item">Readime Cite</a>
       </div></div>
     </li>
     <li class="nav-item">
       <a href="#services">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
       <div class="nav-dropdown"><div class="nav-dropdown-inner">
-        <a href="#services" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">Literature Review</span><span class="nav-dd-desc">Systematic reviews &amp; synthesis</span></div>
-        </a>
-        <a href="#services" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">Survey Design</span><span class="nav-dd-desc">Instrument design &amp; analysis</span></div>
-        </a>
-        <a href="#services" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">Data Analysis</span><span class="nav-dd-desc">Qualitative &amp; quantitative methods</span></div>
-        </a>
-        <a href="#services" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">Research Consulting</span><span class="nav-dd-desc">End-to-end research guidance</span></div>
-        </a>
+        <a href="#services" class="nav-dropdown-item">Literature Review</a>
+        <a href="#services" class="nav-dropdown-item">Survey Design</a>
+        <a href="#services" class="nav-dropdown-item">Data Analysis</a>
+        <a href="#services" class="nav-dropdown-item">Research Consulting</a>
       </div></div>
     </li>
     <li><a href="#research">Research</a></li>
     <li class="nav-item">
       <a href="#about">Company <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
       <div class="nav-dropdown"><div class="nav-dropdown-inner">
-        <a href="#about" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">About</span><span class="nav-dd-desc">Who we are &amp; how we work</span></div>
-        </a>
-        <a href="talks.html" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0014 0v-2M12 19v3"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">Readime Talks</span><span class="nav-dd-desc">The Voice of Ideas</span></div>
-        </a>
-        <a href="reality.html" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">Readime Reality</span><span class="nav-dd-desc">Evidence in action.</span></div>
-        </a>
-        <a href="institute.html" class="nav-dropdown-item">
-          <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M4 21V9l8-5 8 5v12M9 21v-6h6v6"/></svg></div>
-          <div class="nav-dd-text"><span class="nav-dd-name">Readime Institute</span><span class="nav-dd-desc">Education driven by discovery.</span></div>
-        </a>
+        <a href="#about" class="nav-dropdown-item">About</a>
+        <a href="talks.html" class="nav-dropdown-item">Readime Talks</a>
+        <a href="reality.html" class="nav-dropdown-item">Readime Reality</a>
+        <a href="institute.html" class="nav-dropdown-item">Readime Institute</a>
       </div></div>
     </li>
     <li><a href="#contact">Contact</a></li>
@@ -689,37 +651,36 @@
     <h2 class="section-heading">Recent <strong>Publications</strong></h2>
     <div class="cat-filter">
       <button class="cat-btn active" data-cat="all">All</button>
-      <button class="cat-btn" data-cat="agritech">Agriculture Technology</button>
-      <button class="cat-btn" data-cat="embeddedsys">Embedded Systems</button>
-      <button class="cat-btn" data-cat="energysys">Energy Systems</button>
-      <button class="cat-btn" data-cat="aiml">AI &amp; ML</button>
-      <button class="cat-btn" data-cat="bci">BCI</button>
-      <button class="cat-btn" data-cat="ethics">Health &amp; Ethics</button>
+      <button class="cat-btn" data-cat="cognition">Cognition</button>
+      <button class="cat-btn" data-cat="technology">Technology &amp; Society</button>
+      <button class="cat-btn" data-cat="language">Language</button>
+      <button class="cat-btn" data-cat="health">Health &amp; Behavior</button>
+      <button class="cat-btn" data-cat="ethics">Ethics</button>
     </div>
     <div class="papers-grid">
-      <div class="paper-card" data-cat="agritech">
-        <p class="paper-tag">Agriculture Technology</p>
+      <div class="paper-card" data-cat="cognition">
+        <p class="paper-tag">Cognition</p>
         <h3 class="paper-title">An Efficient Deep Learning Based Mobile Application for Pigeon Pea Disease Classification</h3>
         <p class="paper-authors">P. K. Chaudhary et al., ICTP, Kathmandu, Nepal, 2026, pp. 1-6, doi: 10.1109/ICTP67998.2026.11485179.</p>
         <p class="paper-abstract">About 65 percent of Nepal's population depends on agriculture, with pigeon pea ('Rahar') being a key legume crop. This study presents an end-to-end mobile application for real-time pigeon pea disease classification. A self-collected dataset of 7,930 leaf images was used to train a VGG16-based deep learning model, achieving 98 percent accuracy and an F1-score of 94 percent.</p>
         <a href="https://ieeexplore.ieee.org/document/11485179" target="_blank" class="paper-link">Read paper →</a>
       </div>
-      <div class="paper-card" data-cat="embeddedsys">
-        <p class="paper-tag">Embedded Systems</p>
+      <div class="paper-card" data-cat="technology">
+        <p class="paper-tag">Technology &amp; Society</p>
         <h3 class="paper-title">An AI-Driven CNN-LSTM Framework for Multi-Stage Driver Drowsiness Detection with Real-Time Mobile Alerts</h3>
         <p class="paper-authors">R. K. Yadav, P. K. Chaudhary et al., ICTP, Kathmandu, Nepal, 2026, pp. 1-6, doi: 10.1109/ICTP67998.2026.11485404.</p>
         <p class="paper-abstract">This paper proposes "DrowsyDriveNet," a hybrid deep learning architecture classifying driver alertness into four stages: Alert, Slight, Moderate, and Severe. The architecture combines a frozen MobileNetV2 feature extractor with CNN and Bidirectional LSTM networks for spatial-temporal analysis.</p>
         <a href="https://ieeexplore.ieee.org/document/11485404" target="_blank" class="paper-link">Read paper →</a>
       </div>
-      <div class="paper-card" data-cat="aiml">
-        <p class="paper-tag">AI &amp; ML</p>
+      <div class="paper-card" data-cat="language">
+        <p class="paper-tag">Language</p>
         <h3 class="paper-title">Multi-Class Fault Type Classification Using Sequence Components and Wavelet Features</h3>
         <p class="paper-authors">S. K. Chaudhary, P. K. Chaudhary et al., ICTP, Kathmandu, Nepal, 2026, pp. 1-5, doi: 10.1109/ICTP67998.2026.11485076.</p>
         <p class="paper-abstract">A reliable fault classification system for transmission lines using a hybrid approach combining symmetrical components and wavelet transform time-frequency analysis. A comparative study of machine learning models and neural networks is presented.</p>
         <a href="https://ieeexplore.ieee.org/document/11485076" target="_blank" class="paper-link">Read paper →</a>
       </div>
-      <div class="paper-card" data-cat="embeddedsys">
-        <p class="paper-tag">Embedded Systems</p>
+      <div class="paper-card" data-cat="health">
+        <p class="paper-tag">Health &amp; Behavior</p>
         <h3 class="paper-title">A Novel Approach in Sanitary Pad Vending Machine using Image Processing and Internet of Things</h3>
         <p class="paper-authors">Biplov Paneru, Prabhat Kumar Chaudhary. TechRxiv. January 2024. DOI: 10.36227/techrxiv.170629334.48523426/v1</p>
         <p class="paper-abstract">A prototype that dispenses sanitary pads based on female student IDs stored in a CSV file, with cloud integration and remote health monitoring via IoT. The system aims to improve menstrual hygiene access in workplaces and public institutions.</p>
