@@ -42,7 +42,7 @@
       letter-spacing: -0.5px; color: var(--ink); text-decoration: none; transition: color 0.35s; z-index: 201;
     }
     nav.scrolled .nav-logo, nav.menu-open .nav-logo { color: #E0EDFF; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; height: 100%; }
     .nav-links a {
       font-size: 13px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase;
       color: var(--ink-muted); text-decoration: none; transition: color 0.2s;
@@ -100,6 +100,35 @@
       transition: color 0.2s;
     }
     .mob-sublink:hover { color: #E0EDFF; }
+
+    /* ── NAV DROPDOWNS (compact) ── */
+    .nav-item { position: relative; list-style: none; display: flex; align-items: center; }
+    .nav-item > a { display: flex; align-items: center; gap: 5px; }
+    .nav-item > a svg { transition: transform 0.2s; }
+    .nav-item:hover > a svg { transform: rotate(180deg); }
+    .nav-dropdown {
+      position: absolute; top: 100%; left: 50%;
+      padding-top: 8px; min-width: 160px;
+      opacity: 0; pointer-events: none;
+      transform: translateX(-50%) translateY(-4px);
+      transition: opacity 0.18s, transform 0.18s; z-index: 300;
+    }
+    .nav-dropdown-inner {
+      background: #fff; border: 1px solid var(--rule);
+      box-shadow: 0 6px 24px rgba(0,0,48,0.1);
+      padding: 4px 0;
+    }
+    nav.scrolled .nav-dropdown-inner { background: #0d0d3a; border-color: rgba(255,255,255,0.08); }
+    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown-item {
+      display: block; padding: 8px 16px;
+      font-size: 12px; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--ink-muted); text-decoration: none; transition: background 0.12s, color 0.12s;
+      white-space: nowrap;
+    }
+    .nav-dropdown-item:hover { background: var(--bg); color: var(--ink); }
+    nav.scrolled .nav-dropdown-item { color: rgba(224,237,255,0.55); }
+    nav.scrolled .nav-dropdown-item:hover { background: rgba(255,255,255,0.07); color: #E0EDFF; }
 
     .btn-primary {
       display: inline-block; padding: 13px 32px; background: var(--ink); color: #E0EDFF;
@@ -292,47 +321,6 @@
     }
     .footer-bottom p { font-size: 12px; }
 
-    /* ── NAV DROPDOWNS ── */
-    .nav-item { position: relative; list-style: none; }
-    .nav-item > a { display: flex; align-items: center; gap: 5px; }
-    .nav-item > a svg { transition: transform 0.2s; }
-    .nav-item:hover > a svg { transform: rotate(180deg); }
-    .nav-dropdown {
-      position: absolute; top: 100%; left: 50%;
-      padding-top: 12px;
-      min-width: 220px;
-      opacity: 0; pointer-events: none;
-      transform: translateX(-50%) translateY(-6px);
-      transition: opacity 0.2s, transform 0.2s; z-index: 300;
-    }
-    .nav-dropdown-inner {
-      background: #fff; border: 1px solid var(--rule);
-      box-shadow: 0 8px 40px rgba(0,0,48,0.1);
-    }
-    nav.scrolled .nav-dropdown-inner { background: #0a0a40; border-color: rgba(255,255,255,0.08); }
-    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
-    .nav-dropdown-item {
-      display: flex; align-items: flex-start; gap: 14px;
-      padding: 16px 20px; text-decoration: none; transition: background 0.15s;
-      border-bottom: 1px solid var(--rule);
-    }
-    nav.scrolled .nav-dropdown-item { border-bottom-color: rgba(255,255,255,0.06); }
-    .nav-dropdown-item:last-child { border-bottom: none; }
-    .nav-dropdown-item:hover { background: rgba(0,0,48,0.04); }
-    nav.scrolled .nav-dropdown-item:hover { background: rgba(255,255,255,0.05); }
-    .nav-dd-icon {
-      width: 32px; height: 32px; background: var(--bg); border: 1px solid var(--rule);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
-    }
-    nav.scrolled .nav-dd-icon { background: rgba(224,237,255,0.08); border-color: rgba(255,255,255,0.1); }
-    .nav-dd-name {
-      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500;
-      color: var(--ink); display: block; margin-bottom: 2px;
-    }
-    nav.scrolled .nav-dd-name { color: #E0EDFF; }
-    .nav-dd-desc { font-size: 11px; color: var(--ink-ghost); line-height: 1.4; }
-    nav.scrolled .nav-dd-desc { color: rgba(224,237,255,0.4); }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 0 24px; }
@@ -352,20 +340,18 @@
       .footer-grid { grid-template-columns: 1fr; }
       .brand-title { letter-spacing: -1.5px; }
     }
-</style>
+  </style>
 </head>
 <body>
 
 <!-- MOBILE MENU OVERLAY -->
 <div class="mobile-menu" id="mobileMenu">
-
   <div class="mob-group">
     <button class="mob-toggle" data-target="mobProducts">Products <span class="mob-caret">⌄</span></button>
     <div class="mob-submenu" id="mobProducts">
       <a href="readime-cite.html" class="mob-sublink">Readime Cite</a>
     </div>
   </div>
-
   <div class="mob-group">
     <button class="mob-toggle" data-target="mobServices">Services <span class="mob-caret">⌄</span></button>
     <div class="mob-submenu" id="mobServices">
@@ -375,9 +361,7 @@
       <a href="index.html#services" class="mob-sublink">Research Consulting</a>
     </div>
   </div>
-
   <a href="index.html#research" class="mob-link">Research</a>
-
   <div class="mob-group">
     <button class="mob-toggle" data-target="mobCompany">Company <span class="mob-caret">⌄</span></button>
     <div class="mob-submenu" id="mobCompany">
@@ -387,7 +371,6 @@
       <a href="institute.html" class="mob-sublink">Institute</a>
     </div>
   </div>
-
   <a href="index.html#contact" class="mob-link">Contact</a>
 </div>
 
@@ -398,64 +381,31 @@
 
     <li class="nav-item">
       <a href="index.html#products">Products <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
-      <div class="nav-dropdown">
-        <div class="nav-dropdown-inner">
-          <a href="readime-cite.html" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">Readime Cite</span><span class="nav-dd-desc">Free citation formatting tool</span></div>
-          </a>
-        </div>
-      </div>
+      <div class="nav-dropdown"><div class="nav-dropdown-inner">
+        <a href="readime-cite.html" class="nav-dropdown-item">Readime Cite</a>
+      </div></div>
     </li>
 
     <li class="nav-item">
       <a href="index.html#services">Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
-      <div class="nav-dropdown">
-        <div class="nav-dropdown-inner">
-          <a href="index.html#services" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">Literature Review</span><span class="nav-dd-desc">Systematic reviews &amp; synthesis</span></div>
-          </a>
-          <a href="index.html#services" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">Survey Design</span><span class="nav-dd-desc">Instrument design &amp; analysis</span></div>
-          </a>
-          <a href="index.html#services" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">Data Analysis</span><span class="nav-dd-desc">Qualitative &amp; quantitative methods</span></div>
-          </a>
-          <a href="index.html#services" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">Research Consulting</span><span class="nav-dd-desc">End-to-end research guidance</span></div>
-          </a>
-        </div>
-      </div>
+      <div class="nav-dropdown"><div class="nav-dropdown-inner">
+        <a href="index.html#services" class="nav-dropdown-item">Literature Review</a>
+        <a href="index.html#services" class="nav-dropdown-item">Survey Design</a>
+        <a href="index.html#services" class="nav-dropdown-item">Data Analysis</a>
+        <a href="index.html#services" class="nav-dropdown-item">Research Consulting</a>
+      </div></div>
     </li>
 
     <li><a href="index.html#research">Research</a></li>
 
     <li class="nav-item">
       <a href="index.html#about">Company <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
-      <div class="nav-dropdown">
-        <div class="nav-dropdown-inner">
-          <a href="index.html#about" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">About</span><span class="nav-dd-desc">Who we are &amp; how we work</span></div>
-          </a>
-          <a href="talks.html" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0014 0v-2M12 19v3"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">Readime Talks</span><span class="nav-dd-desc">The Voice of Ideas</span></div>
-          </a>
-          <a href="reality.html" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">Readime Reality</span><span class="nav-dd-desc">Evidence in Action</span></div>
-          </a>
-          <a href="institute.html" class="nav-dropdown-item">
-            <div class="nav-dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M4 21V9l8-5 8 5v12M9 21v-6h6v6"/></svg></div>
-            <div class="nav-dd-text"><span class="nav-dd-name">Readime Institute</span><span class="nav-dd-desc">Education Driven by Discovery</span></div>
-          </a>
-        </div>
-      </div>
+      <div class="nav-dropdown"><div class="nav-dropdown-inner">
+        <a href="index.html#about" class="nav-dropdown-item">About</a>
+        <a href="talks.html" class="nav-dropdown-item">Readime Talks</a>
+        <a href="reality.html" class="nav-dropdown-item">Readime Reality</a>
+        <a href="institute.html" class="nav-dropdown-item">Readime Institute</a>
+      </div></div>
     </li>
 
     <li><a href="index.html#contact">Contact</a></li>
@@ -544,7 +494,7 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
           <span>Instagram</span>
         </a>
-        <a href="https://www.facebook.com/readimereality" target="_blank"class="contact-social-link" title="Facebook">
+        <a href="https://www.facebook.com/readimereality" target="_blank" class="contact-social-link" title="Facebook">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.95v-7.04H7.9V12h2.6V9.8c0-2.6 1.55-4 3.9-4 1.13 0 2.3.2 2.3.2v2.5h-1.3c-1.28 0-1.68.8-1.68 1.62V12h2.86l-.46 2.91h-2.4v7.04A10 10 0 0022 12z"/></svg>
           <span>Facebook</span>
         </a>
@@ -556,7 +506,6 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 2h2.7c.2 1.4.9 2.6 2 3.4 1 .8 2.3 1.2 3.6 1.2v2.7c-1.5 0-3-.5-4.3-1.3v6.9c0 3.4-2.7 6.1-6.1 6.1S6.3 18.3 6.3 14.9c0-3.2 2.5-5.9 5.7-6.1v2.8c-1.6.2-2.9 1.6-2.9 3.3 0 1.8 1.5 3.3 3.3 3.3s3.3-1.5 3.3-3.3V2z"/></svg>
           <span>TikTok</span>
         </a>
-    
     </div>
   </div>
 </section>
@@ -590,8 +539,6 @@
     </div>
   </div>
 </section>
-
-
 
 <!-- FOOTER -->
 <footer>
