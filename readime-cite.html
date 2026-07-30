@@ -18,14 +18,14 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:100;background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px}
-.nav-logo-wrap{display:flex;align-items:baseline;gap:0}
+nav{position:sticky;top:0;z-index:100;background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px;gap:16px;}
+.nav-logo-wrap{display:flex;align-items:baseline;gap:0;flex-shrink:0;}
 .nav-logo-parent{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:400;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:-0.3px}
 .nav-logo-sep{color:rgba(224,237,255,0.2);margin:0 6px;font-size:13px}
 .nav-logo-product{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#E0EDFF;letter-spacing:-0.3px}
-.nav-back{font-size:12px;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+.nav-back{font-size:12px;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;flex-shrink:0;white-space:nowrap;}
 .nav-back:hover{color:#E0EDFF}
-.nav-tagline{font-size:12px;color:rgba(224,237,255,0.35);font-style:italic}
+.nav-tagline{font-size:12px;color:rgba(224,237,255,0.35);font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* LAYOUT */
 .app{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 56px)}
@@ -123,17 +123,25 @@ nav{position:sticky;top:0;z-index:100;background:var(--ink);display:flex;align-i
 .toast{position:fixed;bottom:32px;right:32px;background:var(--ink);color:#E0EDFF;padding:13px 22px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999}
 .toast.show{opacity:1}
 
-/* CTA FOOTER */
-.cite-footer{background:var(--ink);padding:48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
-.cite-footer-text{}
-.cite-footer-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(224,237,255,0.4);margin-bottom:8px}
-.cite-footer-heading{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:300;letter-spacing:-0.8px;color:#E0EDFF}
-.cite-footer-heading strong{font-weight:600}
-.cite-footer-ctas{display:flex;gap:12px;flex-wrap:wrap}
-.cite-footer-btn-primary{padding:12px 24px;background:#E0EDFF;color:var(--ink);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s}
-.cite-footer-btn-primary:hover{opacity:0.85}
-.cite-footer-btn-ghost{padding:11px 24px;background:transparent;color:rgba(224,237,255,0.6);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;border:1px solid rgba(224,237,255,0.2);transition:all 0.2s}
-.cite-footer-btn-ghost:hover{color:#E0EDFF;border-color:rgba(224,237,255,0.5)}
+/* ── FOOTER (matching other Readime pages) ── */
+footer{background:var(--ink);color:rgba(224,237,255,0.55);padding:72px 48px 40px;}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:40px;margin-bottom:64px;}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#E0EDFF;letter-spacing:-0.5px;margin-bottom:16px;text-decoration:none;display:inline-block;}
+.footer-tagline{font-size:13px;line-height:1.7;max-width:240px;margin-bottom:28px;}
+.footer-socials{display:flex;gap:12px;flex-wrap:wrap;}
+.footer-socials a{width:36px;height:36px;border:1px solid rgba(224,237,255,0.15);display:flex;align-items:center;justify-content:center;color:rgba(224,237,255,0.5);text-decoration:none;font-size:12px;font-weight:500;transition:all 0.2s;}
+.footer-socials a:hover{background:rgba(224,237,255,0.1);color:#E0EDFF;}
+.footer-col h5{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#E0EDFF;margin-bottom:20px;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:11px;}
+.footer-col ul li a{font-size:13px;color:rgba(224,237,255,0.5);text-decoration:none;transition:color 0.2s;}
+.footer-col ul li a:hover{color:#E0EDFF;}
+.sub-desc{font-size:12px;margin-bottom:16px;line-height:1.6;}
+.sub-socials{display:flex;gap:10px;flex-wrap:wrap;}
+.sub-socials a{font-size:11px;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;border-bottom:1px solid rgba(224,237,255,0.18);padding-bottom:1px;}
+.sub-socials a:hover{color:#E0EDFF;}
+.footer-bottom{border-top:1px solid rgba(224,237,255,0.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.footer-bottom p{font-size:12px;}
 
 @media(max-width:900px){
   .app{grid-template-columns:1fr}
@@ -144,6 +152,16 @@ nav{position:sticky;top:0;z-index:100;background:var(--ink);display:flex;align-i
   .field.full{grid-column:1}
   .compare-grid{grid-template-columns:1fr}
   nav{padding:0 20px}
+  /* Hide tagline on mobile, keep logo and back link */
+  .nav-tagline{display:none;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  footer{padding:56px 24px 32px;}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
+}
+@media(max-width:480px){
+  .footer-grid{grid-template-columns:1fr;}
+  nav{padding:0 16px;gap:8px;}
+  .nav-back{font-size:11px;letter-spacing:0.04em;}
 }
 </style>
 </head>
@@ -228,17 +246,76 @@ nav{position:sticky;top:0;z-index:100;background:var(--ink);display:flex;align-i
   </main>
 </div>
 
-<!-- CTA FOOTER -->
-<div class="cite-footer">
-  <div class="cite-footer-text">
-    <div class="cite-footer-eyebrow">Need more than a citation tool?</div>
-    <div class="cite-footer-heading">Readime helps you do <strong>the whole research.</strong></div>
+<!-- FOOTER (matching other Readime pages) -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Readime</div>
+      <p class="footer-tagline">Independent research that keeps the human at the center of every question we ask.</p>
+      <div class="footer-socials">
+        <a href="https://x.com/readime" target="_blank" title="X">𝕏</a>
+        <a href="https://linkedin.com/company/readime" target="_blank" title="LinkedIn">IN</a>
+        <a href="https://facebook.com/readimehq" target="_blank" title="Facebook">FB</a>
+        <a href="https://instagram.com/readimehq" target="_blank" title="Instagram">IG</a>
+        <a href="https://youtube.com/@readimehq" target="_blank" title="YouTube">YT</a>
+        <a href="https://tiktok.com/@readimehq" target="_blank" title="TikTok">TK</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="index.html#products">Products</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#research">Research</a></li>
+        <li><a href="index.html#about">Company</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Readime Talks</h5>
+      <p class="sub-desc">Conversations with researchers, innovators, founders, policymakers, and industry leaders.</p>
+      <div class="sub-socials">
+        <a href="talks.html">Website</a>
+        <a href="https://youtube.com/@readimetalks" target="_blank">YouTube</a>
+        <a href="https://x.com/readimetalks" target="_blank">X</a>
+        <a href="https://facebook.com/readimetalksofficial" target="_blank">Facebook</a>
+        <a href="https://instagram.com/readimetalks" target="_blank">Instagram</a>
+        <a href="https://linkedin.com/company/readimetalks" target="_blank">LinkedIn</a>
+        <a href="https://tiktok.com/@readime.com" target="_blank">TikTok</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Readime Reality</h5>
+      <p class="sub-desc">Explaining research through real-world stories, case studies, documentaries, and evidence-based content.</p>
+      <div class="sub-socials">
+        <a href="reality.html">Website</a>
+        <a href="https://youtube.com/@readimereality" target="_blank">YouTube</a>
+        <a href="https://x.com/readimereality" target="_blank">X</a>
+        <a href="https://facebook.com/readimereality" target="_blank">Facebook</a>
+        <a href="https://instagram.com/readimereality" target="_blank">Instagram</a>
+        <a href="https://linkedin.com/company/readimereality" target="_blank">LinkedIn</a>
+        <a href="https://tiktok.com/@readime.com" target="_blank">TikTok</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Readime Institute</h5>
+      <p class="sub-desc">Education, research training, fellowships, workshops, certifications, and mentorship.</p>
+      <div class="sub-socials">
+        <a href="institute.html">Website</a>
+        <a href="https://youtube.com/@readimeinstitute" target="_blank">YouTube</a>
+        <a href="https://x.com/readimeinstitute" target="_blank">X</a>
+        <a href="https://facebook.com/readimeinstitute" target="_blank">Facebook</a>
+        <a href="https://instagram.com/readimeinstitute" target="_blank">Instagram</a>
+        <a href="https://linkedin.com/company/readimeinstitute" target="_blank">LinkedIn</a>
+        <a href="https://tiktok.com/@readimeinstitute" target="_blank">TikTok</a>
+      </div>
+    </div>
   </div>
-  <div class="cite-footer-ctas">
-    <a href="index.html#services" class="cite-footer-btn-primary">Explore Services</a>
-    <a href="index.html#contact" class="cite-footer-btn-ghost">Get in Touch</a>
+  <div class="footer-bottom">
+    <p>© 2025 Readime. All rights reserved.</p>
+    <p>Readime.</p>
   </div>
-</div>
+</footer>
 
 <div class="toast" id="toast">Copied to clipboard!</div>
 
