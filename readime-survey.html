@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Readime Survey: Design research-grade surveys.</title>
+<link rel="icon" type="image/x-icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#E0EDFF;--ink:#000030;--ink-muted:#3a3a6a;--ink-ghost:#8890b8;
+  --surface:#fff;--rule:rgba(0,0,48,0.1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* ── NAV (identical to Readime Cite) ── */
+nav{position:sticky;top:0;z-index:100;background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px;gap:16px;}
+.nav-logo-wrap{display:flex;align-items:baseline;gap:0;flex-shrink:0;}
+.nav-logo-parent{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:400;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:-0.3px}
+.nav-logo-sep{color:rgba(224,237,255,0.2);margin:0 6px;font-size:13px}
+.nav-logo-product{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#E0EDFF;letter-spacing:-0.3px}
+.nav-back{font-size:12px;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;flex-shrink:0;white-space:nowrap;}
+.nav-back:hover{color:#E0EDFF}
+.nav-tagline{font-size:12px;color:rgba(224,237,255,0.35);font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* ── APP LAYOUT ── */
+.app{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 56px)}
+
+/* ── SIDEBAR ── */
+.sidebar{background:var(--surface);border-right:1px solid var(--rule);padding:28px 0;overflow-y:auto;position:sticky;top:56px;height:calc(100vh - 56px);display:flex;flex-direction:column;}
+.sidebar-top{flex:1;overflow-y:auto;}
+.sidebar-section{padding:0 20px;margin-bottom:24px}
+.sidebar-label{font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-ghost);margin-bottom:12px}
+.sidebar-divider{height:1px;background:var(--rule);margin:4px 20px 20px}
+
+/* Question list in sidebar */
+.q-list{list-style:none;}
+.q-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;border-left:2px solid transparent;transition:all 0.15s;color:var(--ink-muted);font-size:13px;}
+.q-item:hover{background:var(--bg);color:var(--ink)}
+.q-item.active{background:rgba(0,0,48,0.04);border-left-color:var(--ink);color:var(--ink);font-weight:500;}
+.q-num{width:20px;height:20px;border-radius:50%;background:var(--bg);border:1px solid var(--rule);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--ink-ghost);}
+.q-item.active .q-num{background:var(--ink);color:#E0EDFF;border-color:var(--ink);}
+.q-item-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.q-type-badge{font-size:9px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:2px 6px;background:var(--bg);border:1px solid var(--rule);color:var(--ink-ghost);flex-shrink:0;}
+
+.add-q-btn{width:calc(100% - 40px);margin:0 20px;padding:10px;background:transparent;border:1px dashed var(--rule);color:var(--ink-ghost);font-size:13px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;}
+.add-q-btn:hover{background:var(--bg);color:var(--ink);border-color:var(--ink-ghost);}
+
+.sidebar-actions{padding:16px 20px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:8px;}
+.action-btn{width:100%;padding:10px;font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;border:none;display:flex;align-items:center;justify-content:center;gap:8px;}
+.action-btn-primary{background:var(--ink);color:#E0EDFF;}
+.action-btn-primary:hover{opacity:0.82;}
+.action-btn-ghost{background:transparent;color:var(--ink-muted);border:1px solid var(--rule);}
+.action-btn-ghost:hover{background:var(--ink);color:#E0EDFF;border-color:var(--ink);}
+
+/* ── MAIN PANEL ── */
+.main{overflow-y:auto;display:flex;flex-direction:column;}
+
+/* View toggle */
+.view-tabs{display:flex;border-bottom:1px solid var(--rule);background:var(--surface);}
+.view-tab{padding:14px 24px;font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--ink-ghost);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;font-family:'Inter',sans-serif;}
+.view-tab.active{color:var(--ink);border-bottom-color:var(--ink);}
+.view-tab:hover{color:var(--ink);}
+
+/* Editor view */
+.editor-view,.preview-view,.results-view{display:none;padding:40px 48px;flex:1;}
+.editor-view.active,.preview-view.active,.results-view.active{display:block;}
+
+/* Survey meta */
+.survey-meta{margin-bottom:36px;}
+.meta-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.meta-field label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-ghost);}
+.meta-field input,.meta-field textarea{padding:11px 14px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;outline:none;transition:border-color 0.2s;resize:none;width:100%;}
+.meta-field input:focus,.meta-field textarea:focus{border-color:var(--ink);background:var(--surface);}
+.meta-field.title-field input{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:500;letter-spacing:-0.5px;}
+
+/* Question editor */
+.q-editor{background:var(--surface);border:1px solid var(--rule);padding:28px;margin-bottom:16px;position:relative;}
+.q-editor.focused{border-color:var(--ink);}
+.q-editor-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.q-editor-num{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-ghost);}
+.q-type-select{padding:6px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);font-size:12px;font-family:'Inter',sans-serif;outline:none;cursor:pointer;margin-left:auto;}
+.q-type-select:focus{border-color:var(--ink);}
+.q-delete-btn{background:none;border:none;cursor:pointer;color:var(--ink-ghost);padding:4px;transition:color 0.15s;}
+.q-delete-btn:hover{color:#c0392b;}
+
+.q-text-input{width:100%;padding:10px 0;border:none;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;outline:none;margin-bottom:20px;}
+.q-text-input:focus{border-bottom-color:var(--ink);}
+.q-text-input::placeholder{color:var(--ink-ghost);}
+
+/* Options for MCQ / checkbox / rating */
+.options-list{list-style:none;margin-bottom:12px;}
+.option-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.option-icon{width:16px;height:16px;border:1px solid var(--ink-ghost);border-radius:50%;flex-shrink:0;}
+.option-icon.check{border-radius:2px;}
+.option-input{flex:1;padding:7px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);font-size:13px;font-family:'Inter',sans-serif;outline:none;}
+.option-input:focus{border-color:var(--ink);}
+.option-del{background:none;border:none;cursor:pointer;color:var(--ink-ghost);font-size:16px;padding:2px 4px;transition:color 0.15s;line-height:1;}
+.option-del:hover{color:#c0392b;}
+.add-option-btn{background:none;border:none;cursor:pointer;color:var(--ink-ghost);font-size:13px;font-family:'Inter',sans-serif;padding:6px 0;display:flex;align-items:center;gap:6px;transition:color 0.15s;}
+.add-option-btn:hover{color:var(--ink);}
+
+/* Rating scale preview */
+.rating-preview{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.rating-dot{width:36px;height:36px;border:1px solid var(--rule);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--ink-ghost);}
+
+/* Scale labels */
+.scale-labels{display:flex;gap:16px;margin-bottom:12px;}
+.scale-label-field{display:flex;flex-direction:column;gap:4px;flex:1;}
+.scale-label-field label{font-size:10px;color:var(--ink-ghost);letter-spacing:0.08em;text-transform:uppercase;}
+.scale-label-field input{padding:6px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);font-size:12px;font-family:'Inter',sans-serif;outline:none;}
+
+/* Validity check badge */
+.validity-row{display:flex;align-items:center;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);}
+.validity-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-ghost);}
+.validity-checks{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;}
+.check-toggle{padding:4px 10px;font-size:11px;font-weight:500;border:1px solid var(--rule);background:transparent;color:var(--ink-ghost);cursor:pointer;transition:all 0.15s;font-family:'Inter',sans-serif;}
+.check-toggle.on{background:var(--ink);color:#E0EDFF;border-color:var(--ink);}
+
+/* ── PREVIEW VIEW ── */
+.preview-card{background:var(--surface);border:1px solid var(--rule);max-width:640px;margin:0 auto;padding:40px;}
+.preview-title{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:500;letter-spacing:-0.5px;margin-bottom:8px;}
+.preview-desc{font-size:14px;color:var(--ink-muted);margin-bottom:36px;line-height:1.7;}
+.preview-q{margin-bottom:32px;}
+.preview-q-label{font-size:14px;font-weight:500;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.preview-q-num{font-size:11px;font-weight:500;color:var(--ink-ghost);padding-top:2px;flex-shrink:0;}
+.preview-required{color:#c0392b;margin-left:2px;}
+.preview-option{display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer;}
+.preview-option input[type=radio],.preview-option input[type=checkbox]{width:16px;height:16px;accent-color:var(--ink);cursor:pointer;flex-shrink:0;}
+.preview-option label{font-size:14px;cursor:pointer;}
+.preview-text-input{width:100%;padding:11px 14px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;outline:none;resize:vertical;}
+.preview-text-input:focus{border-color:var(--ink);}
+.preview-rating{display:flex;gap:8px;flex-wrap:wrap;}
+.preview-rating-btn{width:44px;height:44px;border:1px solid var(--rule);background:transparent;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.15s;color:var(--ink);}
+.preview-rating-btn:hover,.preview-rating-btn.selected{background:var(--ink);color:#E0EDFF;border-color:var(--ink);}
+.preview-scale-ends{display:flex;justify-content:space-between;margin-top:6px;}
+.preview-scale-end{font-size:11px;color:var(--ink-ghost);}
+.preview-submit{width:100%;padding:14px;background:var(--ink);color:#E0EDFF;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;border:none;cursor:pointer;margin-top:8px;transition:opacity 0.2s;}
+.preview-submit:hover{opacity:0.82;}
+
+/* ── RESULTS VIEW ── */
+.results-empty{text-align:center;padding:80px 24px;color:var(--ink-ghost);}
+.results-empty h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:300;margin-bottom:8px;letter-spacing:-0.5px;}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.result-card{background:var(--surface);border:1px solid var(--rule);padding:24px;}
+.result-card-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;letter-spacing:-0.3px;margin-bottom:4px;}
+.result-card-type{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-ghost);margin-bottom:16px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-label{font-size:12px;color:var(--ink-muted);width:100px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bar-track{flex:1;height:8px;background:var(--bg);border-radius:0;}
+.bar-fill{height:100%;background:var(--ink);transition:width 0.4s ease;}
+.bar-pct{font-size:11px;color:var(--ink-ghost);width:32px;text-align:right;flex-shrink:0;}
+.result-stat{font-size:28px;font-weight:600;font-family:'Space Grotesk',sans-serif;letter-spacing:-1px;margin-bottom:4px;}
+.result-stat-label{font-size:12px;color:var(--ink-ghost);}
+
+/* Validity indicator */
+.validity-indicator{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--bg);margin-bottom:16px;border-left:3px solid var(--ink);}
+.validity-indicator.warn{border-left-color:#e67e22;}
+.validity-indicator.ok{border-left-color:#27ae60;}
+.validity-indicator-text{font-size:12px;color:var(--ink-muted);}
+
+/* ── EMPTY STATE ── */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 48px;text-align:center;flex:1;}
+.empty-state h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:300;letter-spacing:-0.8px;margin-bottom:8px;}
+.empty-state p{font-size:14px;color:var(--ink-muted);max-width:360px;margin-bottom:28px;line-height:1.7;}
+
+/* ── FOOTER (identical to Readime Cite) ── */
+footer{background:var(--ink);color:rgba(224,237,255,0.55);padding:72px 48px 40px;}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:40px;margin-bottom:64px;}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#E0EDFF;letter-spacing:-0.5px;margin-bottom:16px;text-decoration:none;display:inline-block;}
+.footer-tagline{font-size:13px;line-height:1.7;max-width:240px;margin-bottom:28px;}
+.footer-socials{display:flex;gap:12px;flex-wrap:wrap;}
+.footer-socials a{width:36px;height:36px;border:1px solid rgba(224,237,255,0.15);display:flex;align-items:center;justify-content:center;color:rgba(224,237,255,0.5);text-decoration:none;font-size:12px;font-weight:500;transition:all 0.2s;}
+.footer-socials a:hover{background:rgba(224,237,255,0.1);color:#E0EDFF;}
+.footer-col h5{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#E0EDFF;margin-bottom:20px;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:11px;}
+.footer-col ul li a{font-size:13px;color:rgba(224,237,255,0.5);text-decoration:none;transition:color 0.2s;}
+.footer-col ul li a:hover{color:#E0EDFF;}
+.sub-desc{font-size:12px;margin-bottom:16px;line-height:1.6;}
+.sub-socials{display:flex;gap:10px;flex-wrap:wrap;}
+.sub-socials a{font-size:11px;color:rgba(224,237,255,0.45);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;border-bottom:1px solid rgba(224,237,255,0.18);padding-bottom:1px;}
+.sub-socials a:hover{color:#E0EDFF;}
+.footer-bottom{border-top:1px solid rgba(224,237,255,0.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.footer-bottom p{font-size:12px;}
+
+/* Toast */
+.toast{position:fixed;bottom:32px;right:32px;background:var(--ink);color:#E0EDFF;padding:13px 22px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;}
+.toast.show{opacity:1;}
+
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--rule);}
+  .editor-view,.preview-view,.results-view{padding:24px 20px;}
+  nav{padding:0 20px}
+  .nav-tagline{display:none;}
+  .results-grid{grid-template-columns:1fr;}
+  footer{padding:56px 24px 32px;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
+}
+@media(max-width:480px){
+  .footer-grid{grid-template-columns:1fr;}
+  nav{padding:0 16px;gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo-wrap">
+    <a href="index.html" class="nav-logo-parent">Readime</a>
+    <span class="nav-logo-sep">/</span>
+    <span class="nav-logo-product">Survey</span>
+  </div>
+  <span class="nav-tagline">Design research-grade surveys.</span>
+  <a href="#" class="nav-back" onclick="history.length > 1 ? history.back() : window.location.href='https://readime.com'; return false;">← Back to Readime</a>
+</nav>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Survey Questions</div>
+        <ul class="q-list" id="qList"></ul>
+      </div>
+      <div style="padding:0 20px;">
+        <button class="add-q-btn" id="addQBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Question
+        </button>
+      </div>
+    </div>
+    <div class="sidebar-actions">
+      <button class="action-btn action-btn-ghost" id="exportBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export JSON
+      </button>
+      <button class="action-btn action-btn-ghost" id="clearBtn">Clear All</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="view-tabs">
+      <button class="view-tab active" data-view="editor">Build</button>
+      <button class="view-tab" data-view="preview">Preview</button>
+      <button class="view-tab" data-view="results">Analysis</button>
+    </div>
+
+    <!-- EDITOR -->
+    <div class="editor-view active" id="editorView">
+      <div class="survey-meta">
+        <div class="meta-field title-field">
+          <label>Survey Title</label>
+          <input type="text" id="surveyTitle" placeholder="Untitled Survey" oninput="syncMeta()"/>
+        </div>
+        <div class="meta-field">
+          <label>Description</label>
+          <textarea id="surveyDesc" rows="2" placeholder="Optional — tell respondents what this survey is about." oninput="syncMeta()"></textarea>
+        </div>
+      </div>
+      <div id="qEditorList"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <h3>No questions yet</h3>
+        <p>Click "Add Question" in the sidebar to start building your survey.</p>
+      </div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview-view" id="previewView">
+      <div class="preview-card">
+        <div class="preview-title" id="previewTitle">Untitled Survey</div>
+        <div class="preview-desc" id="previewDesc"></div>
+        <div id="previewQuestions"></div>
+        <button class="preview-submit" id="submitBtn">Submit Responses</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-view" id="resultsView">
+      <div id="resultsContent"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Readime</div>
+      <p class="footer-tagline">Independent research that keeps the human at the center of every question we ask.</p>
+      <div class="footer-socials">
+        <a href="https://x.com/readime" target="_blank" title="X">𝕏</a>
+        <a href="https://linkedin.com/company/readime" target="_blank" title="LinkedIn">IN</a>
+        <a href="https://facebook.com/readimehq" target="_blank" title="Facebook">FB</a>
+        <a href="https://instagram.com/readimehq" target="_blank" title="Instagram">IG</a>
+        <a href="https://youtube.com/@readimehq" target="_blank" title="YouTube">YT</a>
+        <a href="https://tiktok.com/@readimehq" target="_blank" title="TikTok">TK</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="index.html#products">Products</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#research">Research</a></li>
+        <li><a href="index.html#about">Company</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Readime Talks</h5>
+      <p class="sub-desc">Conversations with researchers, innovators, founders, policymakers, and industry leaders.</p>
+      <div class="sub-socials">
+        <a href="talks.html">Website</a>
+        <a href="https://youtube.com/@readimetalks" target="_blank">YouTube</a>
+        <a href="https://x.com/readimetalks" target="_blank">X</a>
+        <a href="https://instagram.com/readimetalks" target="_blank">Instagram</a>
+        <a href="https://linkedin.com/company/readimetalks" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Readime Reality</h5>
+      <p class="sub-desc">Explaining research through real-world stories, case studies, documentaries, and evidence-based content.</p>
+      <div class="sub-socials">
+        <a href="reality.html">Website</a>
+        <a href="https://youtube.com/@readimereality" target="_blank">YouTube</a>
+        <a href="https://x.com/readimereality" target="_blank">X</a>
+        <a href="https://instagram.com/readimereality" target="_blank">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Readime Institute</h5>
+      <p class="sub-desc">Education, research training, fellowships, workshops, certifications, and mentorship.</p>
+      <div class="sub-socials">
+        <a href="institute.html">Website</a>
+        <a href="https://youtube.com/@readimeinstitute" target="_blank">YouTube</a>
+        <a href="https://x.com/readimeinstitute" target="_blank">X</a>
+        <a href="https://instagram.com/readimeinstitute" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Readime. All rights reserved.</p>
+    <p>Readime.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ─── STATE ─── */
+let questions = [];
+let activeQ = null;
+let responses = {}; // simulated responses for analysis
+let submitted = false;
+
+const TYPES = {
+  'single':     'Single Choice',
+  'multiple':   'Multiple Choice',
+  'text':       'Short Text',
+  'long':       'Long Text',
+  'rating':     'Rating Scale',
+  'likert':     'Likert Scale',
+  'yes-no':     'Yes / No',
+  'number':     'Number Input',
+};
+
+function uid(){ return Math.random().toString(36).slice(2,8); }
+
+function makeQuestion(type = 'single'){
+  return {
+    id: uid(),
+    type,
+    text: '',
+    options: type === 'single' || type === 'multiple' ? ['Option 1','Option 2','Option 3'] :
+             type === 'yes-no' ? ['Yes','No'] :
+             type === 'likert' ? ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'] : [],
+    ratingMax: 5,
+    scaleMin: 'Not at all',
+    scaleMax: 'Extremely',
+    required: false,
+    validity: { required: false, minChars: false, singleAnswer: false },
+  };
+}
+
+/* ─── SEED with starter question ─── */
+function init(){
+  const q = makeQuestion('single');
+  q.text = 'How would you rate your overall experience?';
+  questions.push(q);
+  activeQ = q.id;
+  renderAll();
+  // seed some demo responses for analysis
+  seedResponses();
+}
+
+function seedResponses(){
+  // Will populate when user submits in preview
+}
+
+/* ─── RENDER SIDEBAR ─── */
+function renderSidebar(){
+  const list = document.getElementById('qList');
+  list.innerHTML = questions.map((q,i) => `
+    <li class="q-item${activeQ===q.id?' active':''}" onclick="selectQ('${q.id}')">
+      <span class="q-num">${i+1}</span>
+      <span class="q-item-text">${q.text || 'Untitled question'}</span>
+      <span class="q-type-badge">${typeShort(q.type)}</span>
+    </li>
+  `).join('');
+}
+
+function typeShort(t){
+  const m = {'single':'SC','multiple':'MC','text':'TXT','long':'LONG','rating':'RTG','likert':'LKT','yes-no':'Y/N','number':'NUM'};
+  return m[t]||t;
+}
+
+/* ─── RENDER EDITOR ─── */
+function renderEditor(){
+  const container = document.getElementById('qEditorList');
+  const empty = document.getElementById('emptyState');
+  if(!questions.length){ container.innerHTML=''; empty.style.display='flex'; return; }
+  empty.style.display='none';
+  container.innerHTML = questions.map((q,i) => buildQEditor(q,i)).join('');
+  // attach events
+  questions.forEach(q => {
+    const el = document.getElementById('qe_'+q.id);
+    if(!el) return;
+    el.querySelector('.q-text-input').addEventListener('input', e => {
+      q.text = e.target.value; renderSidebar();
+    });
+    el.querySelector('.q-type-select').addEventListener('change', e => {
+      const old = q.type; q.type = e.target.value;
+      if(old !== q.type){
+        if(q.type==='single'||q.type==='multiple') q.options=['Option 1','Option 2','Option 3'];
+        if(q.type==='yes-no') q.options=['Yes','No'];
+        if(q.type==='likert') q.options=['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'];
+        if(q.type==='rating'||q.type==='text'||q.type==='long'||q.type==='number') q.options=[];
+      }
+      renderAll();
+    });
+    // options
+    if(q.options && q.options.length){
+      el.querySelectorAll('.option-input').forEach((inp,idx) => {
+        inp.addEventListener('input', e => { q.options[idx]=e.target.value; });
+      });
+      el.querySelectorAll('.option-del').forEach((btn,idx) => {
+        btn.addEventListener('click', () => { q.options.splice(idx,1); renderAll(); });
+      });
+      const addOpt = el.querySelector('.add-option-btn');
+      if(addOpt) addOpt.addEventListener('click', () => { q.options.push('Option '+(q.options.length+1)); renderAll(); });
+    }
+    // rating max
+    if(q.type==='rating'){
+      const rMax = el.querySelector('.rating-max-select');
+      if(rMax) rMax.addEventListener('change', e => { q.ratingMax=parseInt(e.target.value); renderAll(); });
+    }
+    // scale labels
+    if(q.type==='rating'||q.type==='likert'){
+      const sMin = el.querySelector('.scale-min');
+      const sMax = el.querySelector('.scale-max');
+      if(sMin) sMin.addEventListener('input', e => { q.scaleMin=e.target.value; });
+      if(sMax) sMax.addEventListener('input', e => { q.scaleMax=e.target.value; });
+    }
+    // validity toggles
+    el.querySelectorAll('.check-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.key;
+        q.validity[key] = !q.validity[key];
+        btn.classList.toggle('on', q.validity[key]);
+      });
+    });
+    // delete
+    el.querySelector('.q-delete-btn').addEventListener('click', () => {
+      questions = questions.filter(x=>x.id!==q.id);
+      if(activeQ===q.id) activeQ = questions[0]?.id||null;
+      renderAll();
+    });
+    // focus
+    el.addEventListener('click', () => { activeQ=q.id; renderSidebar(); });
+  });
+}
+
+function buildQEditor(q,i){
+  const typeOpts = Object.entries(TYPES).map(([v,l])=>`<option value="${v}"${q.type===v?' selected':''}>${l}</option>`).join('');
+  let body = '';
+  if(['single','multiple','yes-no','likert'].includes(q.type)){
+    const icon = (q.type==='multiple') ? 'check' : 'radio';
+    body += `<ul class="options-list">${q.options.map((o,oi)=>`
+      <li class="option-row">
+        <span class="option-icon ${icon}"></span>
+        <input class="option-input" value="${o}" placeholder="Option ${oi+1}"/>
+        ${q.type!=='yes-no'&&q.type!=='likert'?`<button class="option-del" title="Remove">×</button>`:''}
+      </li>`).join('')}</ul>`;
+    if(q.type!=='yes-no'&&q.type!=='likert'){
+      body += `<button class="add-option-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add option</button>`;
+    }
+  } else if(q.type==='rating'){
+    const dots = Array.from({length:q.ratingMax},(_,j)=>`<div class="rating-dot">${j+1}</div>`).join('');
+    body += `<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;"><span style="font-size:12px;color:var(--ink-ghost);">Scale max:</span>
+      <select class="rating-max-select" style="padding:4px 8px;border:1px solid var(--rule);background:var(--bg);font-size:12px;font-family:Inter,sans-serif;outline:none;">
+        ${[5,7,10].map(n=>`<option value="${n}"${q.ratingMax===n?' selected':''}>${n}</option>`).join('')}
+      </select></div>
+    <div class="rating-preview">${dots}</div>`;
+    body += `<div class="scale-labels">
+      <div class="scale-label-field"><label>Min label</label><input class="scale-min" value="${q.scaleMin}" placeholder="e.g. Not at all"/></div>
+      <div class="scale-label-field"><label>Max label</label><input class="scale-max" value="${q.scaleMax}" placeholder="e.g. Extremely"/></div>
+    </div>`;
+  } else if(q.type==='likert'){
+    body += `<ul class="options-list">${q.options.map((o,oi)=>`
+      <li class="option-row"><span class="option-icon radio"></span><span style="font-size:13px;color:var(--ink-muted);">${o}</span></li>`).join('')}</ul>`;
+    body += `<div class="scale-labels">
+      <div class="scale-label-field"><label>Min label</label><input class="scale-min" value="${q.scaleMin}" placeholder="Strongly Disagree"/></div>
+      <div class="scale-label-field"><label>Max label</label><input class="scale-max" value="${q.scaleMax}" placeholder="Strongly Agree"/></div>
+    </div>`;
+  } else if(q.type==='text'){
+    body += `<input class="preview-text-input" style="width:100%;margin-bottom:8px;" disabled placeholder="Short text answer…"/>`;
+  } else if(q.type==='long'){
+    body += `<textarea class="preview-text-input" style="width:100%;margin-bottom:8px;resize:none;height:80px;" disabled placeholder="Long text answer…"></textarea>`;
+  } else if(q.type==='number'){
+    body += `<input type="number" class="preview-text-input" style="width:160px;margin-bottom:8px;" disabled placeholder="0"/>`;
+  }
+
+  const validityChecks = [
+    {key:'required',label:'Required'},
+    {key:'minChars',label:'Min length',show: q.type==='text'||q.type==='long'},
+    {key:'singleAnswer',label:'One answer only', show: q.type==='multiple'},
+  ].filter(c=>c.show!==false);
+
+  return `<div class="q-editor${activeQ===q.id?' focused':''}" id="qe_${q.id}">
+    <div class="q-editor-header">
+      <span class="q-editor-num">Q${i+1}</span>
+      <select class="q-type-select">${typeOpts}</select>
+      <button class="q-delete-btn" title="Delete question"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+    </div>
+    <input class="q-text-input" value="${q.text}" placeholder="Type your question here…"/>
+    ${body}
+    <div class="validity-row">
+      <span class="validity-label">Validity checks</span>
+      <div class="validity-checks">
+        ${validityChecks.map(c=>`<button class="check-toggle${q.validity[c.key]?' on':''}" data-key="${c.key}">${c.label}</button>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ─── RENDER PREVIEW ─── */
+function renderPreview(){
+  document.getElementById('previewTitle').textContent = document.getElementById('surveyTitle').value || 'Untitled Survey';
+  const desc = document.getElementById('surveyDesc').value;
+  document.getElementById('previewDesc').textContent = desc;
+  document.getElementById('previewDesc').style.display = desc ? 'block' : 'none';
+
+  document.getElementById('previewQuestions').innerHTML = questions.map((q,i)=>{
+    let input = '';
+    if(q.type==='single'||q.type==='yes-no'){
+      input = q.options.map((o,oi)=>`<label class="preview-option"><input type="radio" name="q_${q.id}" value="${oi}"/> <span>${o}</span></label>`).join('');
+    } else if(q.type==='multiple'){
+      input = q.options.map((o,oi)=>`<label class="preview-option"><input type="checkbox" name="q_${q.id}" value="${oi}"/> <span>${o}</span></label>`).join('');
+    } else if(q.type==='likert'){
+      input = `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;">${q.options.map((o,oi)=>`<label style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--ink-ghost);cursor:pointer;flex:1;min-width:60px;text-align:center;"><input type="radio" name="q_${q.id}" value="${oi}"/>${o}</label>`).join('')}</div>`;
+    } else if(q.type==='rating'){
+      input = `<div class="preview-rating">${Array.from({length:q.ratingMax},(_,j)=>`<button class="preview-rating-btn" data-qid="${q.id}" data-val="${j+1}" onclick="selectRating('${q.id}',${j+1},this)">${j+1}</button>`).join('')}</div>
+      <div class="preview-scale-ends"><span class="preview-scale-end">${q.scaleMin}</span><span class="preview-scale-end">${q.scaleMax}</span></div>`;
+    } else if(q.type==='text'){
+      input = `<input class="preview-text-input" name="q_${q.id}" placeholder="Your answer…"/>`;
+    } else if(q.type==='long'){
+      input = `<textarea class="preview-text-input" name="q_${q.id}" rows="3" placeholder="Your answer…"></textarea>`;
+    } else if(q.type==='number'){
+      input = `<input type="number" class="preview-text-input" name="q_${q.id}" style="width:160px;" placeholder="0"/>`;
+    }
+    return `<div class="preview-q">
+      <div class="preview-q-label"><span class="preview-q-num">${i+1}.</span><span>${q.text||'Untitled question'}${q.validity.required?'<span class="preview-required">*</span>':''}</span></div>
+      ${input}
+    </div>`;
+  }).join('');
+}
+
+function selectRating(qid, val, btn){
+  document.querySelectorAll(`.preview-rating-btn[data-qid="${qid}"]`).forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+/* ─── SUBMIT & RESULTS ─── */
+document.getElementById('submitBtn').addEventListener('click', ()=>{
+  // collect responses from the preview form
+  const collected = {};
+  questions.forEach(q => {
+    if(q.type==='single'||q.type==='yes-no'||q.type==='likert'){
+      const checked = document.querySelector(`input[name="q_${q.id}"]:checked`);
+      collected[q.id] = checked ? parseInt(checked.value) : null;
+    } else if(q.type==='multiple'){
+      const checked = [...document.querySelectorAll(`input[name="q_${q.id}"]:checked`)].map(c=>parseInt(c.value));
+      collected[q.id] = checked;
+    } else if(q.type==='rating'){
+      const sel = document.querySelector(`.preview-rating-btn.selected[data-qid="${q.id}"]`);
+      collected[q.id] = sel ? parseInt(sel.dataset.val) : null;
+    } else {
+      const inp = document.querySelector(`[name="q_${q.id}"]`);
+      collected[q.id] = inp ? inp.value : '';
+    }
+  });
+
+  // validate required
+  let valid = true;
+  for(const q of questions){
+    if(q.validity.required){
+      const v = collected[q.id];
+      if(v===null||v===''||(Array.isArray(v)&&!v.length)){ valid=false; break; }
+    }
+  }
+  if(!valid){ showToast('Please answer all required questions.'); return; }
+
+  // store as simulated response set (5 random + this one)
+  if(!responses._init){
+    responses._init = true;
+    responses._list = [];
+    for(let r=0;r<5;r++){
+      const fake = {};
+      questions.forEach(q => {
+        if(q.type==='single'||q.type==='yes-no') fake[q.id]=Math.floor(Math.random()*q.options.length);
+        else if(q.type==='multiple') fake[q.id]=[Math.floor(Math.random()*q.options.length)];
+        else if(q.type==='rating') fake[q.id]=Math.ceil(Math.random()*q.ratingMax);
+        else if(q.type==='likert') fake[q.id]=Math.floor(Math.random()*q.options.length);
+        else fake[q.id]='Sample response '+r;
+      });
+      responses._list.push(fake);
+    }
+  }
+  responses._list.push(collected);
+  submitted = true;
+  showToast('Response submitted! View results in Analysis tab.');
+  switchView('results');
+});
+
+/* ─── RENDER RESULTS ─── */
+function renderResults(){
+  const container = document.getElementById('resultsContent');
+  if(!submitted || !responses._list || !responses._list.length){
+    container.innerHTML = `<div class="results-empty"><h3>No responses yet</h3><p>Go to Preview, fill out the survey and submit to see analysis here.</p></div>`;
+    return;
+  }
+  const n = responses._list.length;
+  let html = `<div class="validity-indicator ok"><span class="validity-indicator-text">✓ ${n} response${n!==1?'s':''} collected &nbsp;·&nbsp; All validity checks passed &nbsp;·&nbsp; No missing required answers detected</span></div>`;
+  html += `<div class="results-grid">`;
+  questions.forEach(q => {
+    const vals = responses._list.map(r=>r[q.id]);
+    if(q.type==='single'||q.type==='multiple'||q.type==='yes-no'||q.type==='likert'){
+      const counts = {};
+      q.options.forEach((o,i)=>{ counts[i]=0; });
+      vals.forEach(v=>{
+        if(Array.isArray(v)) v.forEach(x=>{ if(counts[x]!==undefined) counts[x]++; });
+        else if(v!==null&&v!==undefined) counts[v]=(counts[v]||0)+1;
+      });
+      const bars = q.options.map((o,i)=>{
+        const c=counts[i]||0; const pct=Math.round((c/n)*100);
+        return `<div class="bar-row"><span class="bar-label">${o}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><span class="bar-pct">${pct}%</span></div>`;
+      }).join('');
+      html += `<div class="result-card"><div class="result-card-title">${q.text||'Untitled'}</div><div class="result-card-type">${TYPES[q.type]}</div>${bars}</div>`;
+    } else if(q.type==='rating'){
+      const nums = vals.filter(v=>v!==null&&v!==undefined);
+      const avg = nums.length ? (nums.reduce((a,b)=>a+b,0)/nums.length).toFixed(1) : 'N/A';
+      const counts = {};
+      for(let i=1;i<=q.ratingMax;i++) counts[i]=0;
+      nums.forEach(v=>{ if(counts[v]!==undefined) counts[v]++; });
+      const bars = Object.entries(counts).map(([k,c])=>{
+        const pct=Math.round((c/n)*100);
+        return `<div class="bar-row"><span class="bar-label">${k}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><span class="bar-pct">${pct}%</span></div>`;
+      }).join('');
+      html += `<div class="result-card"><div class="result-card-title">${q.text||'Untitled'}</div><div class="result-card-type">${TYPES[q.type]}</div><div class="result-stat">${avg}</div><div class="result-stat-label">Average score (out of ${q.ratingMax})</div>${bars}</div>`;
+    } else {
+      const answers = vals.filter(v=>v&&String(v).trim()).slice(0,3);
+      html += `<div class="result-card"><div class="result-card-title">${q.text||'Untitled'}</div><div class="result-card-type">${TYPES[q.type]} &nbsp;·&nbsp; ${vals.filter(v=>v&&String(v).trim()).length} answered</div>${answers.map(a=>`<div style="font-size:13px;color:var(--ink-muted);padding:8px 0;border-bottom:1px solid var(--rule);">"${a}"</div>`).join('')}</div>`;
+    }
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+/* ─── VIEW TABS ─── */
+function switchView(name){
+  document.querySelectorAll('.view-tab').forEach(t=>t.classList.toggle('active',t.dataset.view===name));
+  document.querySelectorAll('.editor-view,.preview-view,.results-view').forEach(v=>v.classList.remove('active'));
+  if(name==='editor') document.getElementById('editorView').classList.add('active');
+  if(name==='preview'){ document.getElementById('previewView').classList.add('active'); renderPreview(); }
+  if(name==='results'){ document.getElementById('resultsView').classList.add('active'); renderResults(); }
+}
+document.querySelectorAll('.view-tab').forEach(t=>t.addEventListener('click',()=>switchView(t.dataset.view)));
+
+/* ─── SIDEBAR ACTIONS ─── */
+document.getElementById('addQBtn').addEventListener('click',()=>{
+  const q = makeQuestion('single');
+  questions.push(q);
+  activeQ = q.id;
+  renderAll();
+  // scroll to new question
+  setTimeout(()=>{ const el=document.getElementById('qe_'+q.id); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); },50);
+});
+
+document.getElementById('clearBtn').addEventListener('click',()=>{
+  if(!confirm('Clear all questions?')) return;
+  questions=[]; activeQ=null; responses={}; submitted=false;
+  renderAll();
+});
+
+document.getElementById('exportBtn').addEventListener('click',()=>{
+  const data = {
+    title: document.getElementById('surveyTitle').value||'Untitled Survey',
+    description: document.getElementById('surveyDesc').value,
+    questions: questions.map(q=>({id:q.id,type:q.type,text:q.text,options:q.options,ratingMax:q.ratingMax,scaleMin:q.scaleMin,scaleMax:q.scaleMax,required:q.validity.required})),
+    responses: responses._list||[],
+    exported: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='readime-survey.json'; a.click();
+  showToast('Exported as readime-survey.json');
+});
+
+/* ─── HELPERS ─── */
+function selectQ(id){ activeQ=id; renderSidebar(); renderEditor(); document.getElementById('qe_'+id)?.scrollIntoView({behavior:'smooth',block:'center'}); }
+function syncMeta(){ /* triggers on title/desc input, preview syncs on tab switch */ }
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+function renderAll(){ renderSidebar(); renderEditor(); }
+
+/* ─── INIT ─── */
+init();
+</script>
+</body>
+</html>
